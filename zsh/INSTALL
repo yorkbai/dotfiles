@@ -1,0 +1,15 @@
+# using zsh shell
+$ chsh -s $(which zsh)
+#install brew
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+#install brew-cask
+$ brew install caskroom/cask/brew-cask
+# install oh-my-zsh
+$ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+#install autojump (using #j ***)
+$ brew install autojump
+$ brew cash install iterm2
+$ brew cash install macvim
+$ brew cash install tmux
+
+
