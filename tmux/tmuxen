@@ -24,6 +24,7 @@ if [ $? != 0 ]; then
     $cmd splitw -v -d "ssh 177"  
     $cmd selectp -t 2
     $cmd splitw -v  "ssh 163"  
+    $cmd renamew   website
     
     #config second window
     $cmd neww  -n etl -t $session -d "ssh 172"
