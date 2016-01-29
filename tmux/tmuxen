@@ -19,7 +19,7 @@ $cmd has -t $session 2> /dev/null
 
 if [ $? != 0 ]; then
     #config first window
-    $cmd new  -n website -s $session -d "ssh 162"
+    $cmd new  -s $session -n website -d "ssh 162"
     $cmd splitw -h -d "ssh 169"  
     $cmd splitw -v -d "ssh 177"  
     $cmd selectp -t 2
@@ -34,14 +34,15 @@ if [ $? != 0 ]; then
     $cmd splitw -v  "ssh 166"  
 
     #config third window
-    $cmd neww  -n db -t $session -d "ssh 164"
-    $cmd selectw -t 2
+    #$cmd neww  -n db -t $session -d "ssh 164"
+    $cmd neww  -n db -t $session  
+    #$cmd selectw -t 2
     #$cmd neww -n ipy -t $session "python"
     #$cmd neww -n irc -t $session "irssi"
     #$cmd neww -n top -t $session "htop"
     #$cmd splitw -v -p 98 -t $session "zsh"
     #$cmd neww -n zsh -t $session "zsh"
-    #$cmd selectw -t $session:2
+    $cmd selectw -t $session:2
 fi
 
 $cmd att -t $session
