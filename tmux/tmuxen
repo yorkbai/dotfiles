@@ -20,23 +20,23 @@ $cmd has -t $session 2> /dev/null
 if [ $? != 0 ]; then
     #config first window
     $cmd new  -s $session -n website -d "ssh 162"
-    $cmd splitw -h -d "ssh 169"  
-    $cmd splitw -v -d "ssh 177"  
+    $cmd splitw -h -d "ssh 169"
+    $cmd splitw -v -d "ssh 177"
     $cmd selectp -t 2
-    $cmd splitw -v  "ssh 163"  
-    $cmd renamew   website
-    
+    $cmd splitw -v  "ssh 163"
+    $cmd renamew  -t 0  website
+
     #config second window
     $cmd neww  -n etl -t $session -d "ssh 172"
     $cmd selectw -t 1
-    $cmd splitw -h -d "ssh 173"  
-    $cmd splitw -v -d "ssh 170"  
+    $cmd splitw -h -d "ssh 173"
+    $cmd splitw -v -d "ssh 170"
     $cmd selectp -t 2
-    $cmd splitw -v  "ssh 166"  
+    $cmd splitw -v  "ssh 166"
 
     #config third window
     #$cmd neww  -n db -t $session -d "ssh 164"
-    $cmd neww  -n db -t $session  
+    $cmd neww  -n db -t $session
     #$cmd selectw -t 2
     #$cmd neww -n ipy -t $session "python"
     #$cmd neww -n irc -t $session "irssi"
