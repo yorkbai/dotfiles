@@ -1,3 +1,4 @@
+export TMOUT=100000
 export EDITOR="vim"
 bindkey -v 
  
