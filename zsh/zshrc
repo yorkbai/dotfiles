@@ -3,7 +3,6 @@ export EDITOR="vim"
 
 #zsh promt like vi
 bindkey -v 
-export KEYTIMEOUT=1
 # vi style incremental search
 bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
@@ -65,7 +64,7 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git osx  brew vi-mode autojump colored-man sublime zsh-syntax-highlighting extract sudo web-search)
+plugins=(git osx  brew vi-mode autojump colored-man sublime zsh-syntax-highlighting extract sudo web-search wd)
 
 # User configuration
 
@@ -123,6 +122,7 @@ function zle-line-init zle-keymap-select {
 }
 zle -N zle-line-init 
 zle -N zle-keymap-select
+export KEYTIMEOUT=1
 RPROMPT='%{$fg[green]%}${VIMODE}%{$reset_color%}'
 # setting completed
 
