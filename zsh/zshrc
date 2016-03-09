@@ -71,7 +71,7 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git osx command-not-found  brew-cask brew vi-mode autojump sublime zsh-syntax-highlighting extract sudo web-search wd iwhois) 
+plugins=(git osx brew-cask brew vi-mode autojump sublime zsh-syntax-highlighting extract sudo web-search wd iwhois) 
 
 # User configuration
 
@@ -107,6 +107,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
+
 
 alias vi='/Users/yorkbai/Applications/MacVim.app/Contents/MacOS/Vim'
 
