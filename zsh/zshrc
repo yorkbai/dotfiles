@@ -12,6 +12,8 @@ bindkey '^S' history-incremental-search-forward
 bindkey '^P' history-search-backward
 bindkey '^N' history-search-forward
 bindkey "^K" push-line
+bindkey "^A" vi-beginning-of-line 
+bindkey "^J" vi-end-of-line 
 #bindkey -M viins ‘jk’ vi-cmd-mode
 
 #edit command in vi ctrl-x ctrl-e
@@ -109,7 +111,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
-
 
 alias vi='/Users/yorkbai/Applications/MacVim.app/Contents/MacOS/Vim'
 
