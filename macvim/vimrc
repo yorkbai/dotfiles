@@ -92,7 +92,7 @@ set linespace=2
 set whichwrap=b,s,<,>,[,]
 " 开启Normal或Visual模式下Backspace键，空格键，左方向键，右方向键，Insert或replace模式下左方向键，右方向键跳行的功能。
 
-filetype plugin indent on
+" filetype plugin indent on
 " 分为三部分命令：file on, file plugin on, file indent on.分别表示自动识别文件类型，用文件类型脚本，使用缩进定义文件。
 
 "==================自定义的键映射======================
@@ -116,8 +116,61 @@ colorscheme solarized
 " togglebg#map("<F5>")
 
 " yank text to the OS X clipboard" 将文本复制到OSX剪贴板中
-noremap <leader>y "*y
-noremap <leader>yy "*Y
+noremap <leader>y    "*y
+noremap <leader>yy   "*Y
  
 " Preserve indentation while pasting text from the OS X clipboard 在粘贴OSX剪贴板中的文本时保留缩进
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
+
+"switch cursor from block in insert mode
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" This enables iterm cursor changes from vim. In .tmux.conf you'll need:
+" set-option -g terminal-overrides
+"'*88col*:colors=88,*256col*:colors=256,xterm*:XT:Ms=\E]52;%p1%s;%p2%s\007:Cc=\E]12;%p1%s\007:Cr=\E]112\007:Cs=\E]50;CursorShape=%?%p1%{3}%<%t%{0}%e%p1%{2}%-%;%d\007'
+"
+" Source:
+" https://github.com/Casecommons/casecommons_workstation/blob/master/templates/default/dot_tmux.conf.erb
+"
+" https://github.com/Casecommons/vim-config/blob/master/init/tmux.vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if exists('$ITERM_PROFILE')
+  if exists('$TMUX')
+      let &t_SI = "\<Esc>[3 q"
+      let &t_EI = "\<Esc>[0 q"
+  else
+      let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+      let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+end
+
+" set paste
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+" vundle plugin manager
+set nocompatible          " 去除VI一致性,必须
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+

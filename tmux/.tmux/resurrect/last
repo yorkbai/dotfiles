@@ -1,0 +1,15 @@
+pane	0	1	:GP	0	:#-	1	:/Users/yorkbai/.ssh	1	zsh	:
+pane	0	1	:GP	0	:#-	2	:/Users/yorkbai	0	zsh	:
+pane	0	1	:GP	0	:#-	3	:/Users/yorkbai	0	zsh	:
+pane	0	1	:GP	0	:#-	4	:/Users/yorkbai	0	zsh	:
+pane	0	1	:GP	0	:#-	5	:/Users/yorkbai	0	zsh	:
+pane	0	1	:GP	0	:#-	6	:/Users/yorkbai	0	zsh	:
+pane	0	2	:test	1	:*	1	:/Users/yorkbai/Downloads	0	zsh	:
+pane	0	2	:test	1	:*	2	:/Users/yorkbai	1	zsh	:
+pane	0	3	:idc	0	:#	1	:/Users/yorkbai	1	ssh	:ssh 167
+pane	0	3	:idc	0	:#	2	:/Users/yorkbai	0	zsh	:
+pane	0	3	:idc	0	:#	3	:/Users/yorkbai	0	zsh	:
+window	0	1	0	:#-	a9e0,59x27,0,0{29x27,0,0[29x18,0,0,4,29x2,0,19,8,29x5,0,22,9],29x27,30,0[29x18,30,0,5,29x2,30,19,6,29x5,30,22,7]}
+window	0	2	1	:*	b109,59x27,0,0[59x13,0,0,11,59x13,0,14,17]
+window	0	3	0	:#	eb0d,59x27,0,0{29x27,0,0,14,29x27,30,0[29x13,30,0,15,29x13,30,14,16]}
+state	0	

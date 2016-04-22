@@ -3,6 +3,7 @@ export ZSH=/Users/yorkbai/.oh-my-zsh
 
 export TMOUT=100000
 export EDITOR="vim"
+setopt HIST_IGNORE_DUPS
 
 #zsh promt like vi
 bindkey -v 
@@ -73,7 +74,7 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git osx brew-cask brew vi-mode autojump sublime zsh-syntax-highlighting extract web-search wd iwhois) 
+plugins=(git osx brew-cask brew vi-mode autojump zsh-syntax-highlighting extract web-search wd iwhois) 
 
 # User configuration
 
@@ -83,6 +84,9 @@ export PYTHONSTARTUP=$HOME/.pythonrc.py
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
+
+#include Z 
+. ~/bin/z.sh
 #source ~/.iterm2_shell_integration.`basename $SHELL`
 
 # You may need to manually set your language environment
@@ -154,4 +158,4 @@ function ts {
   tmux send-keys -t right "$args" C-m
 }
 
-source ~/.oh-my-zsh/plugins/incr/incr*.zsh
+#source ~/.oh-my-zsh/plugins/incr/incr*.zsh
