@@ -28,8 +28,8 @@ bindkey '^X^e' edit-command-line
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="agnoster"
 #ZSH_THEME="aussiegeek"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -126,16 +126,16 @@ export CLICOLOR=1
 export LSCOLORS="gxfxcxdxbxegedabagacad"
 
 #display zsh command line status for vi-mode
-VIMODE='-- INSERT --'
-function zle-line-init zle-keymap-select {
-    #VIMODE="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
-    VIMODE="${${KEYMAP/vicmd/[NORMAL]}/(main|viins)/[INSERT]}"
-    #VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
-    #RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
-    zle reset-prompt
-}
-zle -N zle-line-init 
-zle -N zle-keymap-select
+#VIMODE='-- INSERT --'
+#function zle-line-init zle-keymap-select {
+#    #VIMODE="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+#    VIMODE="${${KEYMAP/vicmd/[NORMAL]}/(main|viins)/[INSERT]}"
+#    #VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]% %{$reset_color%}"
+#    #RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+#    zle reset-prompt
+#}
+#zle -N zle-line-init 
+#zle -N zle-keymap-select
 #config end
 
 export KEYTIMEOUT=1
