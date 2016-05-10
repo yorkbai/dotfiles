@@ -6,12 +6,18 @@ export EDITOR="vim"
 setopt HIST_IGNORE_ALL_DUPS
 setopt no_nomatch
 setopt HIST_NO_STORE
+setopt extended_glob
+setopt correct
 export TERM=xterm-color
+autoload -U zmv
+autoload -U colors && colors
+export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
 
 setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
 alias cat=" cat"
+
 
 #zsh promt like vi
 bindkey -v 
@@ -31,6 +37,7 @@ bindkey "^E" vi-end-of-line
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="aussiegeek"
 ZSH_THEME="agnoster"
+#ZSH_THEME="bunsen"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
