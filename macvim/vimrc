@@ -19,7 +19,7 @@ au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal  dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal  dict+=~/.vim/dict/css.dict
 
-" yank text to the OS X clipboard" 将文本复制到OSX剪贴板中
+" yank text to the OS X clipboard  将文本复制到OSX剪贴板中
 noremap <leader>y    "*y
 noremap <leader>yy   "*Y"
 
@@ -36,6 +36,9 @@ if exists('$ITERM_PROFILE')
          let &t_EI = "\<Esc>]50;CursorShape=0\x7"
     endif
 end
+
+" Use Node.js for JavaScript interpretation
+let $JS_CMD='node'
 
 "限制大量文本粘贴时的自动锁进
 " for tmux to automatically set paste and nopaste mode at the time pasting (as happens in VIM UI)
@@ -61,9 +64,8 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-set nojoinspaces  " 用J合并两行用一个空格隔开
-" 没sudo却想保存
-cmap w!! w !sudo tee % >/dev/null
+set nojoinspaces         " 用J合并两行用一个空格隔开
+cmap w!! w !sudo tee % >/dev/null    " 没sudo却想保存文件
 
 "syntastic相关
 execute pathogen#infect()
@@ -238,6 +240,15 @@ set mouse=v
 "列出当前目录文件  
 map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC> :NERDTreeToggle<CR>
+
+" Format JSON data using python module json.tool
+" map  <F6>  :%!python -m json.tool<CR>
+
+ command! JsonFormat :execute '%!python -m json.tool'
+   \ | :execute '%!python -c "import re,sys;chr=__builtins__.__dict__.get(\"unichr\", chr);sys.stdout.write(re.sub(r\"\\u[0-9a-f]{4}\", lambda x: chr(int(\"0x\" + x.group(0)[2:], 16)).encode(\"utf-8\"), sys.stdin.read()))"'
+   \ | :set ft=javascript
+   \ | :1
+
 "打开树状文件目录  
 map <C-F3> \be  
 " :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
@@ -280,6 +291,7 @@ endfunc
 "代码格式优化化
 
 "map <F6> :call FormartSrc()<CR><CR>
+
 
 "定义FormartSrc()
 func FormartSrc()
