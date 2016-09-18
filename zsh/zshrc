@@ -43,6 +43,7 @@ bindkey "^E" vi-end-of-line
 #ZSH_THEME="aussiegeek"
 #ZSH_THEME="bunsen"
 ZSH_THEME="agnoster"
+DEFAULT_USER="yorkbai"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
