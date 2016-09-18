@@ -1,0 +1,15 @@
+pane	0	1	:zg_private	1	:*	1	:/Users/yorkbai	1	zsh	:
+pane	0	1	:zg_private	1	:*	2	:/Users/yorkbai	0	zsh	:
+pane	0	1	:zg_private	1	:*	3	:/Users/yorkbai	0	zsh	:
+pane	0	2	:gp2_old	0	:	1	:/Users/yorkbai	1	ssh	:ssh gp2_mdw
+pane	0	2	:gp2_old	0	:	2	:/Users	0	ssh	:ssh gp2_1
+pane	0	2	:gp2_old	0	:	3	:/Users/yorkbai	0	ssh	:ssh gp2_2
+pane	0	3	:gp2_extend	0	:	1	:/Users/yorkbai/.ssh	1	ssh	:ssh -i aws_key.pem centos@54.222.236.168
+pane	0	3	:gp2_extend	0	:	2	:/Users/yorkbai	0	zsh	:
+pane	0	4	:web	0	:-	1	:/Users/yorkbai	1	ssh	:ssh 177
+pane	0	4	:web	0	:-	2	:/Users/yorkbai	0	ssh	:ssh 162
+window	0	1	1	:*	9980,173x49,0,0{77x49,0,0,0,95x49,78,0[95x21,78,0,17,95x27,78,22,18]}
+window	0	2	0	:	97bf,173x49,0,0{86x49,0,0,13,86x49,87,0[86x24,87,0,12,86x24,87,25,14]}
+window	0	3	0	:	121d,173x49,0,0{86x49,0,0,15,86x49,87,0,16}
+window	0	4	0	:-	5222,173x49,0,0{86x49,0,0,19,86x49,87,0,20}
+state	0	

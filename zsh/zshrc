@@ -1,6 +1,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/yorkbai/.oh-my-zsh
 
+#docker 
+#eval "$(docker-machine env default)"
+
+export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
+
 export TMOUT=100000
 export EDITOR="vim"
 setopt HIST_IGNORE_ALL_DUPS
@@ -17,7 +22,7 @@ setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
 alias cat=" cat"
-
+alias t='/Users/yorkbai/bin/todo.txt_cli-2.10/todo.sh'
 
 #zsh promt like vi
 bindkey -v 
@@ -36,8 +41,8 @@ bindkey "^E" vi-end-of-line
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="aussiegeek"
-ZSH_THEME="agnoster"
 #ZSH_THEME="bunsen"
+ZSH_THEME="agnoster"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -82,11 +87,11 @@ ZSH_THEME="agnoster"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois) 
+plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois ) 
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 export PATH=/Users/yorkbai/bin:/Users/yorkbai/bin/dbgp:$PATH
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PYTHONPATH=/Users/yorkbai/bin/dbgp/pythonlib
@@ -125,7 +130,8 @@ source $ZSH/oh-my-zsh.sh
 #
 if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
 
-alias vi='/Users/yorkbai/Applications/MacVim.app/Contents/MacOS/Vim'
+#alias vi='/Users/yorkbai/Applications/MacVim.app/Contents/MacOS/Vim'
+alias vi='vim -v'
 alias rm='trash'
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
@@ -143,7 +149,6 @@ function zle-line-init zle-keymap-select {
 }
 zle -N zle-line-init 
 zle -N zle-keymap-select
-
 
 export KEYTIMEOUT=1
 RPROMPT='%{$fg[green]%}${VIMODE}%{$reset_color%}'
@@ -173,3 +178,7 @@ function tj {
 
 #source ~/.oh-my-zsh/plugins/incr/incr*.zsh
 source /usr/local/bin/aws_zsh_completer.sh
+
+# Duotai proxy
+alias pon='export http_proxy=http://duotai:yj3do7W0PxV@team.h.xduotai.com:16457;export https_proxy=$http_proxy' 
+alias poff='unset http_proxy;unset https_proxy'

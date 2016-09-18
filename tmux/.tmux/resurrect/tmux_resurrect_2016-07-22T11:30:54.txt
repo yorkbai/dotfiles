@@ -1,0 +1,15 @@
+pane	0	1	:qxb	0	:	1	:/Users/yorkbai	0	ssh	:ssh qxb1
+pane	0	1	:qxb	0	:	2	:/Users/yorkbai	1	ssh	:ssh qxb2
+pane	0	1	:qxb	0	:	3	:/Users/yorkbai	0	ssh	:ssh qxb3
+pane	0	2	:jl	0	:	1	:/Users/yorkbai/.ssh	0	zsh	:
+pane	0	2	:jl	0	:	2	:/Users/yorkbai	1	zsh	:
+pane	0	3	:zg	0	:-	1	:/Users/yorkbai/Downloads	0	ssh	:ssh info4
+pane	0	3	:zg	0	:-	2	:/Users/yorkbai	1	zsh	:
+pane	0	3	:zg	0	:-	3	:/Users/yorkbai	0	zsh	:
+pane	0	4	:vpnmaster	1	:*	1	:/Users/yorkbai/.ssh	1	ssh	:ssh vm1
+pane	0	4	:vpnmaster	1	:*	2	:/Users/yorkbai	0	ssh	:ssh vm2
+window	0	1	0	:	ff23,173x49,0,0{86x49,0,0[86x24,0,0,22,86x24,0,25,36],86x49,87,0,41}
+window	0	2	0	:	1216,173x49,0,0{86x49,0,0,12,86x49,87,0,14}
+window	0	3	0	:-	bf2d,173x49,0,0{86x49,0,0[86x24,0,0,34,86x24,0,25,42],86x49,87,0,38}
+window	0	4	1	:*	d21b,173x49,0,0{86x49,0,0,43,86x49,87,0,44}
+state	0	
