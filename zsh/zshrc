@@ -88,7 +88,7 @@ DEFAULT_USER="yorkbai"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois ) 
+plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois history) 
 
 # User configuration
 
