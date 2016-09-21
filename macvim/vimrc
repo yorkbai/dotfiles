@@ -20,6 +20,9 @@ au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal  dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal  dict+=~/.vim/dict/css.dict
 
+" 定义快捷键的前缀，即<Leader>
+let mapleader=";"
+
 " yank text to the OS X clipboard  将文本复制到OSX剪贴板中
 noremap <leader>y    "*y
 noremap <leader>yy   "*Y"
@@ -40,6 +43,7 @@ end
 
 " Use Node.js for JavaScript interpretation
 let $JS_CMD='node'
+
 
 "限制大量文本粘贴时的自动锁进
 " for tmux to automatically set paste and nopaste mode at the time pasting (as happens in VIM UI)
@@ -514,6 +518,7 @@ Bundle 'Django-Projects'
 Bundle 'brookhong/DBGPavim'
 Bundle 'christoomey/vim-tmux-navigator'
 Bundle 'benmills/vimux'
+Bundle 'junegunn/vim-easy-align'
 
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
@@ -536,3 +541,10 @@ let g:ctrlp_extensions = ['funky']
 let NERDTreeIgnore=['\.pyc']
 
 let g:dbgPavimBreakAtEntry = 0
+
+vmap <Leader>a <Plug>(EasyAlign)
+nmap <Leader>a <Plug>(EasyAlign)
+if !exists('g:easy_align_delimiters')
+  let g:easy_align_delimiters = {}
+endif
+let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
