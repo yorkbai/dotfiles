@@ -1,7 +1,11 @@
-##vim插件
+#How to Install
+
+#Plugin List
+##自定义<leader>
+    " 定义快捷键的前缀，即<Leader>
+    let mapleader=";"
 
 - 对齐插件: Plug 'junegunn/vim-easy-align'
-    .vimrc文件： 
         vmap ga <Plug>(EasyAlign)
         nmap ga <Plug>(EasyAlign)
         if !exists('g:easy_align_delimiters')
@@ -10,15 +14,13 @@
         let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 
   使用： 进入虚拟模式选择需中对齐的行，按<leader>a 激发插件。默认vim的<leader>键是反斜杠, 可在.vimrc文件中用下行进行自定义设置。
-    " 定义快捷键的前缀，即<Leader>
-    let mapleader=";"
+
     
   最常用指令
      vipga=  (按=号对齐)
      gaip=
 
 - json插件：plug 'axiaoxin/vim-json-line-format'
-  Usage:
   Open a file in Normal mode, move your cursor on the json line, use <leader>pj to show formated json by print it, use <leader>wj could change the text to formatted json.
 
 - ctrlp搜索插件
@@ -29,8 +31,7 @@
   2. ds'    删除'
   3. ysiw]  当前text对象用］括起来
   
-- nerdcommenter 注释插件
-  在.vimrc中添加：
+- nerdcommenter
   let g:NERDCustomDelimiters = {
     \ 'txt': { 'left': '#'}
     \ }
