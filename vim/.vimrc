@@ -31,11 +31,15 @@ Plug 'https://github.com/scrooloose/syntastic.git'
 Plug 'https://github.com/Valloric/YouCompleteMe.git'
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
 
+" 中文
+Plug 'vimim'
+
 "待验证 20160925
 Plug 'Shougo/unite.vim' 
 Plug 'Lokaltog/vim-powerline' 
 Plug 'tpope/vim-fugitive' 
 Plug 'othree/eregex.vim' 
+
 
 call plug#end()
 
