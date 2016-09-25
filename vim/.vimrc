@@ -1,5 +1,20 @@
 "定义快捷键的前缀，即<Leader>
-let mapleader=";"
+" let mapleader=";"
+let mapleader="\<Space>"
+
+" 搜索文件
+nnoremap <Leader>o :CtrlP<CR>
+" 保存文件
+nnoremap <Leader>w :w<CR>
+
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+nmap <Leader><Leader> V
 
 "vim-plug 插件管理器 , Make sure you use single quotes
 call plug#begin('~/.vim/plugged')
@@ -22,7 +37,8 @@ Plug 'Solarized'
 Plug 'MattesGroeger/vim-bookmarks'
 "快速跳转到字符
 Plug 'EasyMotion'
-Plug 'https://github.com/bling/vim-airline.git'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/luofei614/vim-golang.git'
 Plug 'https://github.com/burnettk/vim-angular.git'
 "检查程序语法错误
@@ -31,15 +47,11 @@ Plug 'https://github.com/scrooloose/syntastic.git'
 Plug 'https://github.com/Valloric/YouCompleteMe.git'
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
 
-" 中文
+" 选择区域
+Plug 'terryma/vim-expand-region'
+
+" 中文输入
 Plug 'vimim'
-
-"待验证 20160925
-Plug 'Shougo/unite.vim' 
-Plug 'Lokaltog/vim-powerline' 
-Plug 'tpope/vim-fugitive' 
-Plug 'othree/eregex.vim' 
-
 
 call plug#end()
 
@@ -111,11 +123,7 @@ map     <C-T>       :tabnew<CR>
 autocmd BufEnter *.* exe 'silent ! echo -ne "\033];%:t\007"'
 
 "支持鼠标
-set mouse=a
-
-" 多行缩进
-vnoremap <Tab> >
-vnoremap <S-Tab> <
+"set mouse=a
 
 "语法高亮
 syntax enable
@@ -137,7 +145,7 @@ set cursorcolumn  " 高亮光标所在列
 
 set smartcase   " 搜索时，智能大小写
 set incsearch   " incremental search 
-set autochdir   " 打开文件时，自动 cd 到文件所在目
+"set autochdir   " 打开文件时，自动 cd 到文件所在目
 
 "在insert模式下能用删除键进行删除
 set backspace=indent,eol,start
@@ -152,7 +160,7 @@ set foldmethod=syntax
 set foldcolumn=0  " 设置折叠区域的宽度
 set foldlevel=100
 " 用空格键来开关折叠
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+"nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 "加快速度
 "set synmaxcol=200
@@ -200,3 +208,63 @@ let g:ycm_filetype_blacklist = {
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_keep_logfiles = 1
 "let g:ycm_server_log_level = 'debug'
+
+"--------------------------------------------------------------------------
+"vim-airline
+"--------------------------------------------------------------------------
+let g:airline_theme="molokai" 
+
+"这个是安装字体后 必须设置此项" 
+let g:airline_powerline_fonts = 1   
+
+ "打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+ " 关闭状态显示空白符号计数
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+if !exists('g:airline_symbols')
+   let g:airline_symbols = {}
+endif
+" old vim-powerline symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+
+" 映射切换buffer的键位
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+" 映射<leader>num到num buffer
+map <leader>1 :b 1<CR>
+map <leader>2 :b 2<CR>
+map <leader>3 :b 3<CR>
+map <leader>4 :b 4<CR>
+map <leader>5 :b 5<CR>
+map <leader>6 :b 6<CR>
+map <leader>7 :b 7<CR>
+map <leader>8 :b 8<CR>
+map <leader>9 :b 9<CR>
+
+" vim-expand-region 设置
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+" 自动跳转到粘贴文本的最后
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
+
+" 在文件中快速跳转
+nnoremap <CR> G
+nnoremap <BS> gg
+
+" 查找与替换升级
+"vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR> :<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+"omap s :normal vs<CR>
+
+" 快速选择粘贴的文本
+noremap gV `[v`]
