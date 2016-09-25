@@ -186,3 +186,17 @@ alias pon='export http_proxy=http://duotai:yj3do7W0PxV@team.h.xduotai.com:16457;
 alias poff='unset http_proxy;unset https_proxy'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# =====================  vim与命令行快速切换==============
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
+# =====================  vim与命令行快速切换==============
