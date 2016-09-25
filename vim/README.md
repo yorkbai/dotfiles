@@ -1,22 +1,19 @@
 #How to Install
 
 #Plugin List
-##自定义<leader>
+##自定义前缀
     " 定义快捷键的前缀，即<Leader>
     let mapleader=";"
 
 - 对齐插件: Plug 'junegunn/vim-easy-align'
-        vmap ga <Plug>(EasyAlign)
-        nmap ga <Plug>(EasyAlign)
-        if !exists('g:easy_align_delimiters')
-            let g:easy_align_delimiters = {}
-        endif
-        let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
+    vmap ga <Plug>(EasyAlign)
+    nmap ga <Plug>(EasyAlign)
+    if !exists('g:easy_align_delimiters')
+        let g:easy_align_delimiters = {}
+    endif
+    let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 
-  使用： 进入虚拟模式选择需中对齐的行，按<leader>a 激发插件。默认vim的<leader>键是反斜杠, 可在.vimrc文件中用下行进行自定义设置。
-
-    
-  最常用指令
+    使用： 进入虚拟模式选择需中对齐的行，按<leader>a 激发插件。默认vim的<leader>键是反斜杠, 可在.vimrc文件中用下行进行自定义设置
      vipga=  (按=号对齐)
      gaip=
 
