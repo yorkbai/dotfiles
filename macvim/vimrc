@@ -1,3 +1,10 @@
+" vim-plug 用于替换vundle，更强大的vim插件管理器
+call plug#begin('~/.vim/plugged')
+Plug 'kien/ctrlp.vim'
+Plug 'axiaoxin/vim-json-line-format'
+call plug#end() 
+
+
 set sw=4
 set ts=4
 set et
@@ -69,7 +76,7 @@ endfunction
 
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
 
-set nojoinspaces         " 用J合并两行用一个空格隔开
+set nojoinspaces                     " 用J合并两行用一个空格隔开
 cmap w!! w !sudo tee % >/dev/null    " 没sudo却想保存文件
 
 "syntastic相关
@@ -508,7 +515,7 @@ Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
 Bundle 'jslint.vim'
 Bundle "pangloss/vim-javascript"
 Bundle 'Vim-Script-Updater'
-Bundle 'ctrlp.vim'
+" Bundle 'ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
 Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'
@@ -542,8 +549,10 @@ let NERDTreeIgnore=['\.pyc']
 
 let g:dbgPavimBreakAtEntry = 0
 
-vmap <Leader>a <Plug>(EasyAlign)
-nmap <Leader>a <Plug>(EasyAlign)
+"vmap <Leader>a <Plug>(EasyAlign)
+"nmap <Leader>a <Plug>(EasyAlign)
+vmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 if !exists('g:easy_align_delimiters')
   let g:easy_align_delimiters = {}
 endif

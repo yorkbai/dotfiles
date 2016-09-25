@@ -1,6 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/yorkbai/.oh-my-zsh
 
+
 #docker 
 #eval "$(docker-machine env default)"
 
@@ -131,7 +132,7 @@ source $ZSH/oh-my-zsh.sh
 #
 if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
 
-#alias vi='/Users/yorkbai/Applications/MacVim.app/Contents/MacOS/Vim'
+alias vim='/opt/homebrew-cask/Caskroom/macvim/7.4.104/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vi='vim -v'
 alias rm='trash'
 
@@ -183,3 +184,5 @@ source /usr/local/bin/aws_zsh_completer.sh
 # Duotai proxy
 alias pon='export http_proxy=http://duotai:yj3do7W0PxV@team.h.xduotai.com:16457;export https_proxy=$http_proxy' 
 alias poff='unset http_proxy;unset https_proxy'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
