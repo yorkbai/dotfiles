@@ -1,9 +1,6 @@
 "定义快捷键的前缀，即<Leader>
-" let mapleader=";"
 let mapleader="\<Space>"
 
-" 搜索文件
-nnoremap <Leader>o :CtrlP<CR>
 " 保存文件
 nnoremap <Leader>w :w<CR>
 
@@ -20,16 +17,47 @@ nmap <Leader><Leader> V
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
+vmap ga  <Plug>(EasyAlign)
+nmap ga  <Plug>(EasyAlign)
+if !exists('g:easy_align_delimiters')
+      let g:easy_align_delimiters = {}
+endif
+let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
+
 Plug 'nsf/gocode', { 'rtp': 'vim' }
 Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
-"Plug 'AutoComplPop'
+
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+map  <F11> :NERDTreeToggle<CR>
+map! <F11> <Esc>:NERDTreeToggle<CR>
+
 Plug 'Tagbar'
+map  <F12> :TagbarToggle<CR>
+map! <F12> <Esc>:TagbarToggle<CR>
+
 Plug 'axiaoxin/vim-json-line-format'
+" <Leader>wj
+
 Plug 'scrooloose/nerdcommenter'
+" 添加自定义文件类型为nerdcommenter插件，比如打开txt文件后， 执行:set ft=txt,
+" 默认快捷键<Leader>cc
+let g:NERDCustomDelimiters = {
+    \ 'txt': { 'left': '#'}
+    \ }
+
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+nnoremap <Leader>o :CtrlP<CR>
+
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/terryma/vim-multiple-cursors.git'
+"  cs'" -> change ' to " , ds[ -> delete [ , ysiw} --> 将当前词用{}括起来 
+
+Plug 'https://github.com/terryma/vim-multiple-cursors.git'    "多行操作
+
+" ctrl+n  选中光标下的单词，连续按会连续选。
+" ctrl+p 放弃一个, 回到上一个，
+" ctrl+x 跳过当前选中, 选中下一个，esc退出
+" 场景： 将光标移动到需要修改的单词，ctrl+n 多次选择，x删除，i开始插入新的单词
+
 " 主题
 Plug 'molokai'
 Plug 'Solarized'
@@ -92,21 +120,6 @@ let g:solarized_termcolors=16
 colorscheme solarized
 set background=light
 
-"快捷键设置
-map <F11> :NERDTreeToggle<CR>
-map! <F11> <Esc>:NERDTreeToggle<CR>
-
-map <F12> :TagbarToggle<CR>
-map! <F12> <Esc>:TagbarToggle<CR>
-
-"快速对齐
-vmap ga  <Plug>(EasyAlign)
-nmap ga  <Plug>(EasyAlign)
-if !exists('g:easy_align_delimiters')
-      let g:easy_align_delimiters = {}
-endif
-let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
-
 " 快速注释
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
@@ -123,7 +136,7 @@ map     <C-T>       :tabnew<CR>
 autocmd BufEnter *.* exe 'silent ! echo -ne "\033];%:t\007"'
 
 "支持鼠标
-"set mouse=a
+set mouse=a
 
 "语法高亮
 syntax enable
@@ -182,11 +195,6 @@ set nowrap "自动换行
 set nobackup
 set nowritebackup
 
-" 添加自定义文件类型为nerdcommenter插件，比如打开txt文件后， 执行:set ft=txt
-" ,然后就可以使用nerdcommenter进行注释
-let g:NERDCustomDelimiters = {
-    \ 'txt': { 'left': '#'}
-    \ }
 
 " YCM 配置
 let g:ycm_global_ycm_extra_conf = "~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
@@ -204,10 +212,10 @@ let g:ycm_filetype_blacklist = {
       \ 'log' : 1,
       \ 'json' : 1,
       \}
-"let g:ycm_confirm_extra_conf = 0
-"let g:ycm_server_use_vim_stdout = 1
-"let g:ycm_server_keep_logfiles = 1
-"let g:ycm_server_log_level = 'debug'
+" let g:ycm_confirm_extra_conf = 0
+" let g:ycm_server_use_vim_stdout = 1
+" let g:ycm_server_keep_logfiles = 1
+" let g:ycm_server_log_level = 'debug'
 
 "--------------------------------------------------------------------------
 "vim-airline
@@ -238,7 +246,8 @@ let g:airline_symbols.readonly = '⭤'
 " 映射切换buffer的键位
 nnoremap [b :bp<CR>
 nnoremap ]b :bn<CR>
-" 映射<leader>num到num buffer
+
+" 映射<leader>num到num buffer, using :bd close current buffer.
 map <leader>1 :b 1<CR>
 map <leader>2 :b 2<CR>
 map <leader>3 :b 3<CR>
