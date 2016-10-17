@@ -1,9 +1,8 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/yorkbai/.oh-my-zsh
 
-
 #docker 
-#eval "$(docker-machine env default)"
+# eval "$(docker-machine env default)"
 
 export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
@@ -23,9 +22,9 @@ setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
 alias cat=" cat"
-alias t='/Users/yorkbai/bin/todo.txt_cli-2.10/todo.sh'
+# alias t='/Users/yorkbai/bin/todo.txt_cli-2.10/todo.sh'
 
-#zsh promt like vi
+# zsh promt like vi
 bindkey -v 
 # vi style incremental search
 bindkey '^R' history-incremental-search-backward
@@ -44,7 +43,7 @@ bindkey "^E" vi-end-of-line
 # ZSH_THEME="aussiegeek"
 # ZSH_THEME="bunsen"
 ZSH_THEME="agnoster"
-DEFAULT_USER="yorkbai"
+export DEFAULT_USER="yorkbai"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -89,7 +88,7 @@ DEFAULT_USER="yorkbai"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(git)
-plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois history aws encode64) 
+plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois aws encode64) 
 
 # User configuration
 
@@ -140,7 +139,7 @@ alias rm='trash'
 source /Users/yorkbai/Library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export CLICOLOR=1
-#sets up thecolor scheme for list export
+#sets up the color scheme for list export
 export LSCOLORS="gxfxcxdxbxegedabagacad"
 
 #display zsh command line status for vi-mode

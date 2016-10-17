@@ -120,6 +120,47 @@ let g:solarized_termcolors=16
 colorscheme solarized
 set background=light
 
+" yank text to the OS X clipboard  将文本复制到OSX剪贴板中
+noremap <leader>y    "*y
+noremap <leader>yy   "*Y"
+
+" Preserve indentation while pasting text from the OS X clipboard  在粘贴OSX剪贴板中的文本时保留缩进, 与下面的限制缩进配置效果相同
+noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
+
+"限制大量文本粘贴时的自动缩进,for tmux to automatically set paste and nopaste mode at the time pasting (as happens in VIM UI)
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+     return a:s
+  endif
+
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+
+  return tmux_start.substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g').tmux_end
+endfunction
+
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+"调整光标形状在不同的模式下
+if exists('$ITERM_PROFILE')
+    if exists('$TMUX')
+         let &t_SI = "\<Esc>[3 q"
+         let &t_EI = "\<Esc>[0 q"
+    else
+         let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+         let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+    endif
+end
+
 " 快速注释
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
@@ -141,7 +182,7 @@ set mouse=a
 "语法高亮
 syntax enable
 syntax on
-set so=10
+"set so=10
 filetype on         " 打开文件类型支持
 filetype plugin on  " 打开文件类型插件支持
 filetype indent on  " 打开文件类型缩进支持
@@ -159,9 +200,6 @@ set cursorcolumn  " 高亮光标所在列
 set smartcase   " 搜索时，智能大小写
 set incsearch   " incremental search 
 "set autochdir   " 打开文件时，自动 cd 到文件所在目
-
-"在insert模式下能用删除键进行删除
-set backspace=indent,eol,start
 
 " 文件编码
 set fenc=utf-8
@@ -277,3 +315,6 @@ nnoremap <BS> gg
 
 " 快速选择粘贴的文本
 noremap gV `[v`]
+
+" 宏测试
+let @m = "Y6GpF1C7 112joNew text.ZZ"
