@@ -11,6 +11,7 @@ $ brew install autojump
 $ brew cash install iterm2
 $ brew cash install macvim
 $ brew cash install tmux
+$ brew cash install stow
 
 #osx add python autocomplete support
 https://nicolas.perriault.net/code/2010/python-tab-completion/
