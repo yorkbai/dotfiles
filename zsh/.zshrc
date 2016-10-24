@@ -102,7 +102,7 @@ plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-s
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
-export PATH=/Users/yorkbai/bin:/Users/yorkbai/bin/dbgp:$PATH
+export PATH=$HOME/bin:$PATH
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PYTHONPATH=/Users/yorkbai/bin/dbgp/pythonlib
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -180,7 +180,7 @@ function ts {
   tmux send-keys -t right "$args" C-m
 }
 
-function tj {
+function tk {
   args=$@
   tmux send-keys -t Down "$args" C-m
 }
