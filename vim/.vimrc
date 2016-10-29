@@ -11,14 +11,14 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-nmap <Leader><Leader> V
+" nmap <Leader><Leader> V
 
 "vim-plug 插件管理器 , Make sure you use single quotes
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-easy-align'
-vmap ga  <Plug>(EasyAlign)
-nmap ga  <Plug>(EasyAlign)
+vmap <leader>a  <Plug>(EasyAlign)
+nmap <leader>a  <Plug>(EasyAlign)
 if !exists('g:easy_align_delimiters')
       let g:easy_align_delimiters = {}
 endif
@@ -39,38 +39,90 @@ Plug 'axiaoxin/vim-json-line-format'
 " <Leader>wj
 
 Plug 'scrooloose/nerdcommenter'
-" 添加自定义文件类型为nerdcommenter插件，比如打开txt文件后， 执行:set ft=txt,
-" 默认快捷键<Leader>cc
-let g:NERDCustomDelimiters = {
-    \ 'txt': { 'left': '#'}
-    \ }
+" 添加自定义文件类型,比如打开txt文件后,执行:set ft=txt,然后使用快捷键进行注释
+" <leader>cc   加注释
+" <leader>cu   解开注释
+" <leader>c<space>  加上/解开注释, 智能判断
+" <leader>cy   先复制, 再注解(p可以进行黏贴)
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDAltDelims_java = 1
+let g:NERDCustomDelimiters = { 'txt': { 'left': '#'}, 'c': { 'left': '/**','right': '*/' }  }
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 nnoremap <Leader>o :CtrlP<CR>
 
 Plug 'https://github.com/tpope/vim-surround.git'
-"  cs'" -> change ' to " , ds[ -> delete [ , ysiw} --> 将当前词用{}括起来 
+"  cs'" -> change ' to " , ds[ -> delete [ 这个括号 , ysiw} --> 将当前词用{}括起来 
 
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'    "多行操作
-
 " ctrl+n  选中光标下的单词，连续按会连续选。
 " ctrl+p 放弃一个, 回到上一个，
 " ctrl+x 跳过当前选中, 选中下一个，esc退出
 " 场景： 将光标移动到需要修改的单词，ctrl+n 多次选择，x删除，i开始插入新的单词
 
+
 " 主题
 Plug 'molokai'
 Plug 'Solarized'
-"bookmark  mm 添加书签,  mn 移动书签  mp 移动到前一个书签  ma 删除所有书签
-Plug 'MattesGroeger/vim-bookmarks'
+" Plug 'MattesGroeger/vim-bookmarks'
+" bookmark  mm 添加书签,  mn 移动书签  mp 移动到前一个书签  ma 删除所有书签
+
 "快速跳转到字符
 Plug 'EasyMotion'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme="molokai"
+" let g:airline_theme="luna"
+
+" set status line
+set laststatus=2
+let g:airline_powerline_fonts = 1   
+
+"打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" 关闭状态显示空白符号计数
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#symbol = '!'
+if !exists('g:airline_symbols')
+   let g:airline_symbols = {}
+endif
+
+" old vim-powerline symbols
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+
+" 映射切换buffer的键位
+nnoremap [b :bp<CR>
+nnoremap ]b :bn<CR>
+
+" 映射<leader>num到num buffer, using :bd close current buffer.
+map <leader>1 :b 1<CR>
+map <leader>2 :b 2<CR>
+map <leader>3 :b 3<CR>
+map <leader>4 :b 4<CR>
+map <leader>5 :b 5<CR>
+map <leader>6 :b 6<CR>
+map <leader>7 :b 7<CR>
+map <leader>8 :b 8<CR>
+map <leader>9 :b 9<CR>
+
 Plug 'https://github.com/luofei614/vim-golang.git'
 Plug 'https://github.com/burnettk/vim-angular.git'
+
 "检查程序语法错误
 Plug 'https://github.com/scrooloose/syntastic.git'
+
 " 自动补全
 Plug 'https://github.com/Valloric/YouCompleteMe.git'
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
@@ -161,14 +213,6 @@ if exists('$ITERM_PROFILE')
     endif
 end
 
-" 快速注释
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDAltDelims_java = 1
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
 
 " 切换tab页 用gt
 map     <C-T>       :tabnew<CR>
@@ -199,7 +243,7 @@ set cursorcolumn  " 高亮光标所在列
 
 set smartcase   " 搜索时，智能大小写
 set incsearch   " incremental search 
-"set autochdir   " 打开文件时，自动 cd 到文件所在目
+set autochdir   " 打开文件时，自动 cd 到文件所在目
 
 " 文件编码
 set fenc=utf-8
@@ -224,8 +268,10 @@ set backspace=eol,start,indent
 
 "基本设置
 set encoding=utf-8
+set langmenu=zh_CN.UTF-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
 set fileencoding=utf-8
-set fileencodings=ucs-bom,utf-8,chinese
+" set fileencodings=ucs-bom,utf-8,chinese
 set ambiwidth=double
 set nowrap "自动换行
 
@@ -255,46 +301,6 @@ let g:ycm_filetype_blacklist = {
 " let g:ycm_server_keep_logfiles = 1
 " let g:ycm_server_log_level = 'debug'
 
-"--------------------------------------------------------------------------
-"vim-airline
-"--------------------------------------------------------------------------
-let g:airline_theme="molokai" 
-
-"这个是安装字体后 必须设置此项" 
-let g:airline_powerline_fonts = 1   
-
- "打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-
- " 关闭状态显示空白符号计数
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#whitespace#symbol = '!'
-if !exists('g:airline_symbols')
-   let g:airline_symbols = {}
-endif
-" old vim-powerline symbols
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-
-" 映射切换buffer的键位
-nnoremap [b :bp<CR>
-nnoremap ]b :bn<CR>
-
-" 映射<leader>num到num buffer, using :bd close current buffer.
-map <leader>1 :b 1<CR>
-map <leader>2 :b 2<CR>
-map <leader>3 :b 3<CR>
-map <leader>4 :b 4<CR>
-map <leader>5 :b 5<CR>
-map <leader>6 :b 6<CR>
-map <leader>7 :b 7<CR>
-map <leader>8 :b 8<CR>
-map <leader>9 :b 9<CR>
 
 " vim-expand-region 设置
 vmap v <Plug>(expand_region_expand)
