@@ -17,3 +17,7 @@ $ brew cash install stow
 https://nicolas.perriault.net/code/2010/python-tab-completion/
 
 
+#update locate db
+sudo /usr/libexec/locate.updatedb
+or: 
+cd /usr/local/bin;  ln -s /usr/libexec/locate.updatedb updatedb;  updatedb

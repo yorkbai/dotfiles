@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/Users/yorkbai/workspace/useful_code/python/script/log_dispose'
 let g:netrw_dirhist_2='/Users/yorkbai/workspace/useful_code/git/dotfiles/macvim'
 let g:netrw_dirhist_3='/private/tmp/1/.vim'
+let g:netrw_dirhist_4='/Users/yorkbai/workspace/useful_code/python/script/log_dispose'

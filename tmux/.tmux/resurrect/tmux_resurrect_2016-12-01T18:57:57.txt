@@ -1,0 +1,28 @@
+pane	0	1	:k8s	1	:*	1	:/Users/yorkbai	1	ssh	:ssh k8s3
+pane	0	1	:k8s	1	:*	2	:/Users/yorkbai	0	zsh	:
+pane	0	1	:k8s	1	:*	3	:/Users/yorkbai	0	ssh	:ssh k8s2
+pane	0	1	:k8s	1	:*	4	:/Users/yorkbai	0	ssh	:ssh k8s1
+pane	0	2	:gp_3T	0	:-	1	:/Users/yorkbai	0	ssh	:ssh a
+pane	0	2	:gp_3T	0	:-	2	:/Users/yorkbai	0	ssh	:ssh 1
+pane	0	2	:gp_3T	0	:-	3	:/Users/yorkbai	0	ssh	:ssh 3
+pane	0	2	:gp_3T	0	:-	4	:/Users/yorkbai	0	ssh	:ssh 5
+pane	0	2	:gp_3T	0	:-	5	:/Users/yorkbai	0	ssh	:ssh 7
+pane	0	2	:gp_3T	0	:-	6	:/Users/yorkbai	0	ssh	:ssh b
+pane	0	2	:gp_3T	0	:-	7	:/Users/yorkbai	0	ssh	:ssh 2
+pane	0	2	:gp_3T	0	:-	8	:/Users/yorkbai	0	ssh	:ssh 4
+pane	0	2	:gp_3T	0	:-	9	:/Users/yorkbai	0	ssh	:ssh 6
+pane	0	2	:gp_3T	0	:-	10	:/Users/yorkbai	1	ssh	:ssh 8
+pane	0	3	:gp-test	0	:	1	:/Users	0	ssh	:ssh gp2_mdw
+pane	0	3	:gp-test	0	:	2	:/Users/yorkbai/.ssh	0	zsh	:
+pane	0	3	:gp-test	0	:	3	:/Users/yorkbai	1	zsh	:
+pane	0	4	:zg2	0	:	1	:/Users/yorkbai	0	ssh	:ssh zg2_gw1
+pane	0	4	:zg2	0	:	2	:/Users/yorkbai	0	ssh	:ssh zg2_gw3
+pane	0	4	:zg2	0	:	3	:/Users/yorkbai	0	ssh	:ssh zg2_codis1
+pane	0	4	:zg2	0	:	4	:/Users/yorkbai	0	ssh	:ssh zg2_gw2
+pane	0	4	:zg2	0	:	5	:/Users/yorkbai	1	ssh	:ssh zg2_openapi
+pane	0	4	:zg2	0	:	6	:/Users/yorkbai	0	ssh	:ssh zg2_codis2
+window	0	1	1	:*	48c3,238x72,0,0[238x42,0,0{117x42,0,0[117x21,0,0,0,117x20,0,22,37],120x42,118,0,3},238x29,0,43,2]
+window	0	2	0	:-	41b6,238x72,0,0{117x72,0,0[117x12,0,0,4,117x14,0,13,6,117x13,0,28,7,117x15,0,42,8,117x14,0,58,9],120x72,118,0[120x12,118,0,5,120x14,118,13,10,120x13,118,28,11,120x15,118,42,12,120x14,118,58,13]}
+window	0	3	0	:	4b08,238x72,0,0{117x72,0,0[117x45,0,0,14,117x26,0,46,16],120x72,118,0,15}
+window	0	4	0	:	cec8,238x72,0,0{118x72,0,0[118x24,0,0,24,118x23,0,25,26,118x23,0,49,28],119x72,119,0[119x24,119,0,25,119x23,119,25,27,119x23,119,49,29]}
+state	0	

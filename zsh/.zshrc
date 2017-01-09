@@ -22,6 +22,15 @@ setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
 alias cat=" cat"
+alias  -s sh=vi
+alias  -s ini=vi
+alias  -s conf=vi
+alias  -s py=vi
+alias  -s html=vi
+alias -s gz='tar -xzvf'
+alias -s tgz='tar -xzvf'
+alias -s zip='unzip'
+alias -s bz2='tar -xjvf'
 # alias t='/Users/yorkbai/bin/todo.txt_cli-2.10/todo.sh'
 
 # zsh promt like vi
@@ -34,6 +43,12 @@ bindkey '^N' history-search-forward
 bindkey "^K" push-line
 bindkey "^A" vi-beginning-of-line 
 bindkey "^E" vi-end-of-line 
+
+#edit command in vi ctrl-x ctrl-e
+autoload edit-command-line
+zle -N edit-command-line
+bindkey '^X^e' edit-command-line
+
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -185,8 +200,10 @@ function tk {
   tmux send-keys -t Down "$args" C-m
 }
 
-#source ~/.oh-my-zsh/plugins/incr/incr*.zsh
 source /usr/local/bin/aws_zsh_completer.sh
+#incr插件与tab自动选择冲突，如果使用则不能按多次tab切换文件
+#source ~/.oh-my-zsh/plugins/incr/incr*.zsh
+source /usr/local/bin/virtualenvwrapper.sh
 
 # Duotai proxy
 alias pon='export http_proxy=http://duotai:yj3do7W0PxV@team.h.xduotai.com:16457;export https_proxy=$http_proxy' 

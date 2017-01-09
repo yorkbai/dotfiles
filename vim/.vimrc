@@ -11,18 +11,24 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
+cmap w!! w !sudo tee > /dev/null %
+
 " nmap <Leader><Leader> V
 
 "vim-plug 插件管理器 , Make sure you use single quotes
 call plug#begin('~/.vim/plugged')
 
+" vip<leader>a is normal used. - means from right to left. 
 Plug 'junegunn/vim-easy-align'
 vmap <leader>a  <Plug>(EasyAlign)
 nmap <leader>a  <Plug>(EasyAlign)
 if !exists('g:easy_align_delimiters')
       let g:easy_align_delimiters = {}
 endif
+
 let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
+
+Plug 'rizzatti/dash.vim'
 
 Plug 'nsf/gocode', { 'rtp': 'vim' }
 Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
@@ -30,6 +36,9 @@ Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
+
+
+map <F8> :Dash<cr>
 
 Plug 'Tagbar'
 map  <F12> :TagbarToggle<CR>
@@ -77,14 +86,14 @@ Plug 'EasyMotion'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme="molokai"
-" let g:airline_theme="luna"
 
-" set status line
 set laststatus=2
 let g:airline_powerline_fonts = 1   
 
 "打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " 关闭状态显示空白符号计数
@@ -102,9 +111,14 @@ let g:airline_right_alt_sep = '⮃'
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 
-" 映射切换buffer的键位
-nnoremap [b :bp<CR>
-nnoremap ]b :bn<CR>
+set hidden " 避免必须保存修改才可以跳转buffer
+
+" buffer快速导航
+nnoremap <Leader>b :bp<CR>
+nnoremap <Leader>f :bn<CR>
+
+" 查看buffers
+nnoremap <Leader>l :ls<CR>
 
 " 映射<leader>num到num buffer, using :bd close current buffer.
 map <leader>1 :b 1<CR>
@@ -129,6 +143,8 @@ let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
 
 " 选择区域
 Plug 'terryma/vim-expand-region'
+vmap v <Plug>(expand_region_expand)
+vmap V <Plug>(expand_region_shrink)
 
 " 中文输入
 Plug 'vimim'
