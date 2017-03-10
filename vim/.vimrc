@@ -340,3 +340,59 @@ noremap gV `[v`]
 
 " 宏测试
 let @m = "Y6GpF1C7 112joNew text.ZZ"
+
+" 按F5编译运行
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!g++ % -o %<"
+		exec "!time ./%<"
+	elseif &filetype == 'cpp'
+		exec "!g++ % -o %<"
+		exec "!time ./%<"
+	elseif &filetype == 'java' 
+		exec "!javac %" 
+		exec "!time java %<"
+	elseif &filetype == 'sh'
+		:!time bash %
+	elseif &filetype == 'python'
+		exec "!time python2.7 %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+"        exec "!go build %<"
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
+	endif
+endfunc
+
+map <F12> :call FormartSrc()<CR>
+"define FormartSrc()
+func FormartSrc()
+exec "w"
+if &filetype == 'c'
+	exec "!astyle --style=ansi --one-line=keep-statements -a --suffix=none %"
+elseif &filetype == 'cpp' || &filetype == 'hpp'
+	exec "r !astyle --style=ansi --one-line=keep-statements  --suffix=none %> /dev/null 2>&1"
+elseif &filetype == 'perl'
+	exec "!astyle --style=gnu --suffix=none %"
+elseif &filetype == 'py'||&filetype == 'python'
+	exec "r !pydent % > /dev/null 2>&1"
+elseif &filetype == 'java'
+	exec "!astyle --style=java --suffix=none %"
+elseif &filetype == 'jsp'
+	exec "!astyle --style=gnu --suffix=none %"
+elseif &filetype == 'xml'
+	exec "!astyle --style=gnu --suffix=none %"
+elseif &filetype == 'html'
+	exec "!astyle --style=gnu --suffix=none %"
+elseif &filetype == 'htm'
+	exec "!astyle --style=gnu --suffix=none %"
+endif
+exec "e! %"
+endfunc
+"end FormartSrc 
+
