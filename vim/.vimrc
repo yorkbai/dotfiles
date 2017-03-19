@@ -2,7 +2,7 @@
 let mapleader="\<Space>"
 
 " 保存文件
-nnoremap <Leader>w :w<CR>
+nnoremap <Leader>w :wq<CR>
 
 vmap <Leader>y "+y
 vmap <Leader>d "+d
@@ -11,6 +11,7 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
+" modify file without change to root
 cmap w!! w !sudo tee > /dev/null %
 
 " nmap <Leader><Leader> V
