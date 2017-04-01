@@ -74,6 +74,7 @@ Plug 'https://github.com/terryma/vim-multiple-cursors.git'    "多行操作
 " ctrl+x 跳过当前选中, 选中下一个，esc退出
 " 场景： 将光标移动到需要修改的单词，ctrl+n 多次选择，x删除，i开始插入新的单词
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " 主题
 Plug 'molokai'
@@ -84,6 +85,9 @@ Plug 'Solarized'
 "快速跳转到字符
 Plug 'EasyMotion'
 
+" --------------------
+"  vim-airline
+" --------------------
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme="molokai"
@@ -396,4 +400,3 @@ endif
 exec "e! %"
 endfunc
 "end FormartSrc 
-

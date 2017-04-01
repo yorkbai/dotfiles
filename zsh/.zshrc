@@ -22,11 +22,11 @@ setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
 alias cat=" cat"
-alias  -s sh=vi
-alias  -s ini=vi
-alias  -s conf=vi
-alias  -s py=vi
-alias  -s html=vi
+alias -s sh=vi
+alias -s ini=vi
+alias -s conf=vi
+alias -s py=vi
+alias -s html=vi
 alias -s gz='tar -xzvf'
 alias -s tgz='tar -xzvf'
 alias -s zip='unzip'
@@ -40,29 +40,24 @@ bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
 bindkey '^P' history-search-backward
 bindkey '^N' history-search-forward
-# 命令输入后，需要先执行其他命令
-bindkey "^K" push-line
-
 bindkey "^A" vi-beginning-of-line 
 bindkey "^E" vi-end-of-line 
 
-#edit command in vi ctrl-x ctrl-e
+# 命令输入后，需要先执行其他命令时
+bindkey "^B" push-line
+
+#modify command line in vi using 'ctrl-x ctrl-e' statment
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^X^e' edit-command-line
-
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-# ZSH_THEME="robbyrussell"
-# ZSH_THEME="aussiegeek"
-# ZSH_THEME="bunsen"
 ZSH_THEME="agnoster"
 export DEFAULT_USER="yorkbai"
-#ZSH_THEME="bullet-train"
-#ZSH_THEME="powerline"
+
 # setting for powerline theme
 #POWERLINE_PATH="short"
 #POWERLINE_NO_BLANK_LINE="true"
@@ -113,7 +108,7 @@ export DEFAULT_USER="yorkbai"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-#plugins=(git)
+# plugins=(git)
 plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois aws encode64 copydir) 
 
 # User configuration
@@ -126,9 +121,9 @@ export PYTHONPATH=/Users/yorkbai/bin/dbgp/pythonlib
 
 source $ZSH/oh-my-zsh.sh
 
-#include Z 
-#. ~/bin/z.sh
-#source ~/.iterm2_shell_integration.`basename $SHELL`
+# include Z 
+# ~/bin/z.sh
+# source ~/.iterm2_shell_integration.`basename $SHELL`
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -150,7 +145,7 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
+
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -292,3 +287,13 @@ zle -N backward-delete-char check-cmd-backward-delete-char
 # quote pasted URLs
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
+
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+        tmux rename-window "$*"
+        command ssh "$@"
+        tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+        command ssh "$@"
+    fi
+}
