@@ -18,6 +18,9 @@ autoload -U zmv
 autoload -U colors && colors
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
 
+# 为方便复制，右边的提示符只在最新的提示符上显示
+setopt transient_rprompt
+
 setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
@@ -109,7 +112,7 @@ export DEFAULT_USER="yorkbai"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git)
-plugins=(git osx z  brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois aws encode64 copydir) 
+plugins=(git-extras git osx z brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois encode64 copydir ) 
 
 # User configuration
 
@@ -150,7 +153,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
+# if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
 
 alias vim='/opt/homebrew-cask/Caskroom/macvim/7.4.104/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vi='vim -v'
@@ -284,8 +287,12 @@ check-cmd-backward-delete-char() { zle .backward-delete-char && recolor-cmd }
 zle -N self-insert check-cmd-self-insert
 zle -N backward-delete-char check-cmd-backward-delete-char
 
-# quote pasted URLs
-autoload -U url-quote-magic
+
+# https://zhimingwang.org/blog/2015-09-21-zsh-51-and-bracketed-paste.html
+autoload -Uz bracketed-paste-url-magic
+zle -N bracketed-paste bracketed-paste-url-magic
+
+autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
 ssh() {
