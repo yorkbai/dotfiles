@@ -160,7 +160,7 @@ alias vi='vim -v'
 alias rm='trash'
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
-source /Users/yorkbai/Library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /Users/yorkbai/Library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export CLICOLOR=1
 #sets up the color scheme for list export
