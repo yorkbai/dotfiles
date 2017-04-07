@@ -158,6 +158,7 @@ source $ZSH/oh-my-zsh.sh
 alias vim='/opt/homebrew-cask/Caskroom/macvim/7.4.104/Applications/MacVim.app/Contents/MacOS/Vim'
 alias vi='vim -v'
 alias rm='trash'
+alias git=hub
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 
