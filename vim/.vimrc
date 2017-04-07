@@ -33,6 +33,7 @@ Plug 'rizzatti/dash.vim'
 
 Plug 'nsf/gocode', { 'rtp': 'vim' }
 Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
+Plug 'https://github.com/tpope/vim-obsession'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 map  <F11> :NERDTreeToggle<CR>

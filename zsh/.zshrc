@@ -112,7 +112,7 @@ export DEFAULT_USER="yorkbai"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # plugins=(git)
-plugins=(git-extras git osx z brew-cask brew vi-mode zsh-syntax-highlighting extract web-search wd iwhois encode64 copydir ) 
+plugins=(git-extras git osx z brew-cask brew vi-mode  extract web-search wd iwhois encode64 copydir d ) 
 
 # User configuration
 
@@ -160,7 +160,6 @@ alias vi='vim -v'
 alias rm='trash'
 
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
-# source /Users/yorkbai/Library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export CLICOLOR=1
 #sets up the color scheme for list export
@@ -304,3 +303,4 @@ ssh() {
         command ssh "$@"
     fi
 }
+source /Users/yorkbai/Library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
