@@ -30,6 +30,7 @@ endif
 let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String'] }
 
 Plug 'rizzatti/dash.vim'
+Plug 'mileszs/ack.vim'
 
 Plug 'nsf/gocode', { 'rtp': 'vim' }
 Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
