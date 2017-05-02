@@ -295,13 +295,4 @@ zle -N bracketed-paste bracketed-paste-url-magic
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-ssh() {
-    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
-        tmux rename-window "$*"
-        command ssh "$@"
-        tmux set-window-option automatic-rename "on" 1>/dev/null
-    else
-        command ssh "$@"
-    fi
-}
 source /Users/yorkbai/Library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
