@@ -13,7 +13,6 @@ setopt no_nomatch
 setopt HIST_NO_STORE
 setopt extended_glob
 setopt correct
-export TERM=xterm-color
 autoload -U zmv
 autoload -U colors && colors
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
@@ -28,7 +27,7 @@ alias cat=" cat"
 alias -s sh=vi
 alias -s ini=vi
 alias -s conf=vi
-alias -s py=vi
+alias -s py=python
 alias -s html=vi
 alias -s gz='tar -xzvf'
 alias -s tgz='tar -xzvf'
@@ -86,7 +85,7 @@ export DEFAULT_USER="yorkbai"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -163,8 +162,8 @@ alias git=hub
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 
 export CLICOLOR=1
-#sets up the color scheme for list export
-export LSCOLORS="gxfxcxdxbxegedabagacad"
+export LSCOLORS=gxfxcxdxbxegedabagacad
+[[ $TMUX = "" ]] && export TERM="xterm-256color"
 
 #display zsh command line status for vi-mode
 VIMODE='-- INSERT --'
