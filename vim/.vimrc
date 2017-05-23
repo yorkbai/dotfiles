@@ -39,11 +39,24 @@ Plug 'https://github.com/tpope/vim-obsession'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
-
+"设置NERDTreetagbar的宽度
+let g:NERDTreeWinSize = 20
+let g:tagbar_width=20
+" open a NERDTree automatically when vim starts up
+" autocmd vimenter * NERDTree
+" open a NERDTree automatically when vim starts up if no files were specified
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" open NERDTree automatically when vim starts up on opening a directory
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 map <F8> :Dash<cr>
+" map <F4> <leader>ci <CR>
 
 Plug 'Tagbar'
+" 设置tagbar的窗口宽度
+let g:tagbar_width=30
 map  <F12> :TagbarToggle<CR>
 map! <F12> <Esc>:TagbarToggle<CR>
 
@@ -182,9 +195,6 @@ endif
 set hlsearch
 "set nohlsearch  " 关闭搜索高亮
 
-"设置NERDTreetagbar的宽度
-let g:NERDTreeWinSize = 20
-let g:tagbar_width=20
 
 "颜色主题设置
 set t_Co=256
@@ -376,29 +386,25 @@ func! CompileRunGcc()
 	endif
 endfunc
 
-map <F12> :call FormartSrc()<CR>
-"define FormartSrc()
+map <F6> :call FormartSrc()<CR>
+" define FormartSrc()  代码格式优化
 func FormartSrc()
 exec "w"
-if &filetype == 'c'
-	exec "!astyle --style=ansi --one-line=keep-statements -a --suffix=none %"
-elseif &filetype == 'cpp' || &filetype == 'hpp'
-	exec "r !astyle --style=ansi --one-line=keep-statements  --suffix=none %> /dev/null 2>&1"
-elseif &filetype == 'perl'
-	exec "!astyle --style=gnu --suffix=none %"
-elseif &filetype == 'py'||&filetype == 'python'
-	exec "r !pydent % > /dev/null 2>&1"
-elseif &filetype == 'java'
-	exec "!astyle --style=java --suffix=none %"
-elseif &filetype == 'jsp'
-	exec "!astyle --style=gnu --suffix=none %"
-elseif &filetype == 'xml'
-	exec "!astyle --style=gnu --suffix=none %"
-elseif &filetype == 'html'
-	exec "!astyle --style=gnu --suffix=none %"
-elseif &filetype == 'htm'
-	exec "!astyle --style=gnu --suffix=none %"
+if &filetype == 'py'||&filetype == 'python'
+    exec "r !autopep8 -i --aggressive %"
 endif
 exec "e! %"
 endfunc
-"end FormartSrc 
+" end FormartSrc 
+
+au BufNewFile,BufRead *.py
+\ set tabstop=4 | 
+\ set softtabstop=4 |
+\ set shiftwidth=4 |
+\ set textwidth=79 |
+\ set expandtab |
+\ set autoindent |
+\ set fileformat=unix 
+
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/

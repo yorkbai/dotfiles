@@ -1,3 +1,6 @@
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/yorkbai/.oh-my-zsh
 
@@ -11,6 +14,7 @@ export EDITOR="vim"
 setopt HIST_IGNORE_ALL_DUPS
 setopt no_nomatch
 setopt HIST_NO_STORE
+# setopt EXTENDED_HISTORY
 setopt extended_glob
 setopt correct
 autoload -U zmv
@@ -23,6 +27,7 @@ setopt transient_rprompt
 setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
+alias pwd=" pwd"
 alias cat=" cat"
 alias -s sh=vi
 alias -s ini=vi
@@ -154,8 +159,6 @@ source $ZSH/oh-my-zsh.sh
 #
 # if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
 
-alias vim='/opt/homebrew-cask/Caskroom/macvim/7.4.104/Applications/MacVim.app/Contents/MacOS/Vim'
-alias vi='vim -v'
 alias rm='trash'
 alias git=hub
 
@@ -173,8 +176,9 @@ function zle-line-init zle-keymap-select {
 }
 zle -N zle-line-init 
 zle -N zle-keymap-select
+
 export KEYTIMEOUT=1
-RPROMPT='%{$fg[green]%}${VIMODE}%{$reset_color%}'
+RPROMPT='%{$fg[blue]%}${VIMODE}%{$reset_color%}'
 # setting completed
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
