@@ -31,17 +31,20 @@ let g:easy_align_delimiters['#'] = { 'pattern': '#', 'ignore_groups': ['String']
 
 Plug 'rizzatti/dash.vim'
 Plug 'mileszs/ack.vim'
-
 Plug 'nsf/gocode', { 'rtp': 'vim' }
 Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
 Plug 'https://github.com/tpope/vim-obsession'
-
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/skywind3000/asyncrun.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
 "设置NERDTreetagbar的宽度
 let g:NERDTreeWinSize = 20
 let g:tagbar_width=20
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
 " open a NERDTree automatically when vim starts up
 " autocmd vimenter * NERDTree
 " open a NERDTree automatically when vim starts up if no files were specified
@@ -50,9 +53,20 @@ let g:tagbar_width=20
 " open NERDTree automatically when vim starts up on opening a directory
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ "Unknown"   : "?"
+    \ }
 
 map <F8> :Dash<cr>
-" map <F4> <leader>ci <CR>
+map <F4> <leader>ci <CR>
 
 Plug 'Tagbar'
 " 设置tagbar的窗口宽度
@@ -131,7 +145,7 @@ let g:airline_right_alt_sep = '⮃'
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 
-set hidden " 避免必须保存修改才可以跳转buffer
+set hidden "避免必须保存修改才可以跳转buffer
 
 " buffer快速导航
 nnoremap <Leader>b :bp<CR>
@@ -160,6 +174,7 @@ Plug 'https://github.com/scrooloose/syntastic.git'
 " 自动补全
 Plug 'https://github.com/Valloric/YouCompleteMe.git'
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
+let g:ycm_autoclose_preview_window_after_completion=1
 
 " 选择区域
 Plug 'terryma/vim-expand-region'
