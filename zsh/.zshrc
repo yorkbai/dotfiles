@@ -7,6 +7,9 @@ export ZSH=/Users/yorkbai/.oh-my-zsh
 #docker 
 # eval "$(docker-machine env default)"
 
+# cheat
+export CHEATCOLORS=true
+
 export HOMEBREW_CASK_OPTS="--caskroom=/opt/homebrew-cask/Caskroom"
 
 export TMOUT=100000
@@ -31,6 +34,7 @@ alias pwd=" pwd"
 alias cat=" cat"
 alias -s sh=vi
 alias -s ini=vi
+alias -s md=vi
 alias -s conf=vi
 alias -s py=python
 alias -s html=vi
@@ -42,6 +46,7 @@ alias -s bz2='tar -xjvf'
 
 # zsh promt like vi
 bindkey -v 
+
 # vi style incremental search
 bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
@@ -51,7 +56,7 @@ bindkey "^A" vi-beginning-of-line
 bindkey "^E" vi-end-of-line 
 
 # 命令输入后，需要先执行其他命令时
-bindkey "^B" push-line
+bindkey "^B" push-line-or-edit
 
 #modify command line in vi using 'ctrl-x ctrl-e' statment
 autoload edit-command-line

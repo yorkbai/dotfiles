@@ -404,7 +404,9 @@ au BufNewFile,BufRead *.py
 \ set textwidth=79 |
 \ set expandtab |
 \ set autoindent |
-\ set fileformat=unix 
+\ set fileformat=unix  |
 
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+let g:ycm_server_keep_logfiles = 1
+let g:ycm_server_log_level = 'debug'
