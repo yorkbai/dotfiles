@@ -36,14 +36,22 @@ Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/skywind3000/asyncrun.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'jistr/vim-nerdtree-tabs'
+
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
 "设置NERDTreetagbar的宽度
 let g:NERDTreeWinSize = 20
 let g:tagbar_width=20
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+" NERDTree-Tabs
+"let g:nerdtree_tabs_open_on_console_startup=1   "设置打开vim的时候默认打开目录树
+" 透過 NERDTree Tabs 開啟檔案，快捷鍵: \t 
+map <leader>t <plug>NERDTreeTabsToggle<CR>
 
 " open a NERDTree automatically when vim starts up
 " autocmd vimenter * NERDTree
