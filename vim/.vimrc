@@ -40,6 +40,7 @@ Plug 'https://github.com/skywind3000/asyncrun.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'tmhedberg/SimpylFold'
 
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
@@ -49,7 +50,7 @@ let g:NERDTreeWinSize = 20
 let g:tagbar_width=20
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 " NERDTree-Tabs
-"let g:nerdtree_tabs_open_on_console_startup=1   "设置打开vim的时候默认打开目录树
+let g:nerdtree_tabs_open_on_console_startup=1   "设置打开vim的时候默认打开目录树
 " 透過 NERDTree Tabs 開啟檔案，快捷鍵: \t 
 map <leader>t <plug>NERDTreeTabsToggle<CR>
 
@@ -83,7 +84,7 @@ map  <F12> :TagbarToggle<CR>
 map! <F12> <Esc>:TagbarToggle<CR>
 
 Plug 'axiaoxin/vim-json-line-format'
-" <Leader>wj
+" <Leader>wj   格式化为json格式
 
 Plug 'scrooloose/nerdcommenter'
 " 添加自定义文件类型,比如打开txt文件后,执行:set ft=txt,然后使用快捷键进行注释
@@ -307,11 +308,12 @@ set fencs=utf-8,gbk,gb18030,gb2312,cp936,usc-bom,euc-jp
 set enc=utf-8
 
 "语法折叠
-set foldmethod=syntax
+set foldmethod=indent
 set foldcolumn=0  " 设置折叠区域的宽度
-set foldlevel=100
+set foldlevel=99
+nnoremap <F3>  za
 " 用空格键来开关折叠
-"nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+"nnoremap <space>  @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 "加快速度
 "set synmaxcol=200
