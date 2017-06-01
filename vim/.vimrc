@@ -42,18 +42,24 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tmhedberg/SimpylFold'
 Plug 'suan/vim-instant-markdown'
+Plug 'w0rp/ale'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+let g:ale_emit_conflict_warnings = 0
+
+let g:ycm_key_list_select_completion = ['<c-n>',  '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>',  '<Up>']
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " --------------------
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
 " --------------------
-
-"<Leader>l触发limelight功能
-"nmap <Leader>l :Goyo<CR>
-"xmap <Leader>l :Goyo<CR>
-"map <Leader>l :Goyo<CR>
-"map! <Leader>l<ESC> :Goyo!<CR>
 
 " Goyo
 function! s:goyo_before()
@@ -66,6 +72,7 @@ endfunction
 
 let g:goyo_callbacks = [function('s:goyo_before'), function('s:goyo_after')]
 nmap <leader>g :Goyo<cr>
+
 " 进入goyo模式后自动触发limelight,退出后则关闭
 autocmd User GoyoEnter Limelight
 autocmd User GoyoLeave Limelight!
