@@ -4,6 +4,9 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/yorkbai/.oh-my-zsh
 
+# vim-instant-markdown plugin setting
+set shell=bash\ -i
+
 #docker 
 # eval "$(docker-machine env default)"
 

@@ -1,2 +1,0 @@
-" github 脚本安装vim配置
-wget -qO- https://raw.github.com/ma6174/vim/master/setup.sh | sh -x

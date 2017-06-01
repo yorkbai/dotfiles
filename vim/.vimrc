@@ -21,7 +21,7 @@ call plug#begin('~/.vim/plugged')
 
 " vip<leader>a is normal used. - means from right to left. 
 Plug 'junegunn/vim-easy-align'
-vmap <leader>a  <Plug>(EasyAlign)
+xmap <leader>a  <Plug>(EasyAlign)
 nmap <leader>a  <Plug>(EasyAlign)
 if !exists('g:easy_align_delimiters')
       let g:easy_align_delimiters = {}
@@ -41,27 +41,73 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tmhedberg/SimpylFold'
+Plug 'suan/vim-instant-markdown'
+
+" --------------------
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/seoul256.vim'
+" --------------------
+
+"<Leader>l触发limelight功能
+"nmap <Leader>l :Goyo<CR>
+"xmap <Leader>l :Goyo<CR>
+"map <Leader>l :Goyo<CR>
+"map! <Leader>l<ESC> :Goyo!<CR>
+
+" Goyo
+function! s:goyo_before()
+     set nonumber
+endfunction
+
+function! s:goyo_after()
+     set number
+endfunction
+
+let g:goyo_callbacks = [function('s:goyo_before'), function('s:goyo_after')]
+nmap <leader>g :Goyo<cr>
+" 进入goyo模式后自动触发limelight,退出后则关闭
+autocmd User GoyoEnter Limelight
+autocmd User GoyoLeave Limelight!
+let g:goyo_width = 120
+let g:goyo_margin_top = 4
+let g:goyo_margin_bottom = 4
+let g:goyo_linenr = 0
+
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.8
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+" When there's no empty line between the paragraphs
+" and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+" Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
 
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
+
 "设置NERDTreetagbar的宽度
 let g:NERDTreeWinSize = 20
 let g:tagbar_width=20
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-" NERDTree-Tabs
-let g:nerdtree_tabs_open_on_console_startup=1   "设置打开vim的时候默认打开目录树
-" 透過 NERDTree Tabs 開啟檔案，快捷鍵: \t 
-map <leader>t <plug>NERDTreeTabsToggle<CR>
 
-" open a NERDTree automatically when vim starts up
-" autocmd vimenter * NERDTree
-" open a NERDTree automatically when vim starts up if no files were specified
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" open NERDTree automatically when vim starts up on opening a directory
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+" NERDTree-Tabs
+"let g:nerdtree_tabs_open_on_console_startup=1   "设置打开vim的时候默认打开目录树
+" 透過 NERDTree Tabs 開啟檔案，快捷鍵: \t 
+"map <leader>t <plug>NERDTreeTabsToggle<CR>
+
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",
@@ -75,7 +121,6 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 map <F8> :Dash<cr>
-map <F4> <leader>ci <CR>
 
 Plug 'Tagbar'
 " 设置tagbar的窗口宽度
@@ -87,11 +132,14 @@ Plug 'axiaoxin/vim-json-line-format'
 " <Leader>wj   格式化为json格式
 
 Plug 'scrooloose/nerdcommenter'
+map <F4> <leader>ci
+
 " 添加自定义文件类型,比如打开txt文件后,执行:set ft=txt,然后使用快捷键进行注释
 " <leader>cc   加注释
 " <leader>cu   解开注释
 " <leader>c<space>  加上/解开注释, 智能判断
 " <leader>cy   先复制, 再注解(p可以进行黏贴)
+
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
@@ -102,6 +150,9 @@ let g:NERDTrimTrailingWhitespace = 1
 
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 nnoremap <Leader>o :CtrlP<CR>
+let g:ctrlp_show_hidden = 0
+" 设置过滤不进行查找的后缀名 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|pyc)$'
 
 Plug 'https://github.com/tpope/vim-surround.git'
 "  cs'" -> change ' to " , ds[ -> delete [ 这个括号 , ysiw} --> 将当前词用{}括起来 
@@ -113,6 +164,7 @@ Plug 'https://github.com/terryma/vim-multiple-cursors.git'    "多行操作
 " 场景： 将光标移动到需要修改的单词，ctrl+n 多次选择，x删除，i开始插入新的单词
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " 主题
 Plug 'molokai'
@@ -154,14 +206,11 @@ let g:airline_right_alt_sep = '⮃'
 let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 
-set hidden "避免必须保存修改才可以跳转buffer
+set hidden    "避免必须保存修改才可以跳转buffer
 
 " buffer快速导航
 nnoremap <Leader>b :bp<CR>
 nnoremap <Leader>f :bn<CR>
-
-" 查看buffers
-nnoremap <Leader>l :ls<CR>
 
 " 映射<leader>num到num buffer, using :bd close current buffer.
 map <leader>1 :b 1<CR>
@@ -223,7 +272,10 @@ set hlsearch
 "颜色主题设置
 set t_Co=256
 let g:solarized_termcolors=16
-"两种流行风格的主题
+
+" -----------------------
+" 两种流行风格的主题
+" -----------------------
 "colorscheme molokai
 "set background=dark
 colorscheme solarized
