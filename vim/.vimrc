@@ -14,8 +14,6 @@ vmap <Leader>P "+P
 " modify file without change to root
 cmap w!! w !sudo tee > /dev/null %
 
-" nmap <Leader><Leader> V
-
 "vim-plug 插件管理器 , Make sure you use single quotes
 call plug#begin('~/.vim/plugged')
 
@@ -42,11 +40,53 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tmhedberg/SimpylFold'
 Plug 'suan/vim-instant-markdown'
-Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'Raimondi/delimitMate'
+Plug 'davidhalter/jedi-vim'
+Plug 'w0rp/ale'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/seoul256.vim'
 
-let g:ale_emit_conflict_warnings = 0
+" ale plugin must install flake8 using 'brew install flake8'
+let g:ale_history_log_output = 1
+let g:ale_sign_column_always = 1
+let g:ale_linters = { 'python': ['flake8'], }
+
+
+"function ALE() abort
+"    return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
+"endfunction
+"let g:airline_section_error = '%{ALE()}'
+
+function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+endfunction
+
+set statusline=%{LinterStatus()}
+
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 let g:ycm_key_list_select_completion = ['<c-n>',  '<Down>']
 let g:ycm_key_list_previous_completion = ['<c-p>',  '<Up>']
@@ -54,12 +94,6 @@ let g:ycm_key_list_previous_completion = ['<c-p>',  '<Up>']
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" --------------------
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/seoul256.vim'
-" --------------------
 
 " Goyo
 function! s:goyo_before()
@@ -91,11 +125,6 @@ let g:limelight_default_coefficient = 0.8
 " Number of preceding/following paragraphs to include (default: 0)
 let g:limelight_paragraph_span = 1
 
-" Beginning/end of paragraph
-" When there's no empty line between the paragraphs
-" and each paragraph starts with indentation
-" let g:limelight_bop = '^\s'
-" let g:limelight_eop = '\ze\n^\s'
 
 " Highlighting priority (default: 10)
 " Set it to -1 not to overrule hlsearch
@@ -234,7 +263,7 @@ Plug 'https://github.com/luofei614/vim-golang.git'
 Plug 'https://github.com/burnettk/vim-angular.git'
 
 "检查程序语法错误
-Plug 'https://github.com/scrooloose/syntastic.git'
+" Plug 'https://github.com/scrooloose/syntastic.git'
 
 " 自动补全
 Plug 'https://github.com/Valloric/YouCompleteMe.git'
@@ -275,6 +304,60 @@ endif
 set hlsearch
 "set nohlsearch  " 关闭搜索高亮
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""新文件标题
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"新建.c,.h,.sh,.java文件，自动插入文件头 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+""定义函数SetTitle，自动插入文件头 
+func SetTitle() 
+    "如果文件类型为.sh文件 
+    if &filetype == 'sh' 
+        call setline(1,"\#!/bin/bash") 
+        call append(line("."), "") 
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python")
+        call append(line("."),"# -*- coding=utf-8 -*-")
+        call append(line(".")+1, "") 
+
+    elseif &filetype == 'ruby'
+        call setline(1,"#!/usr/bin/env ruby")
+        call append(line("."),"# encoding: utf-8")
+        call append(line(".")+1, "")
+
+        "    elseif &filetype == 'mkd'
+        "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+    else 
+        call setline(1, "/*************************************************************************") 
+        call append(line("."), "	> File Name: ".expand("%")) 
+        call append(line(".")+1, "	> Author: ") 
+        call append(line(".")+2, "	> Mail: ") 
+        call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
+        call append(line(".")+4, " ************************************************************************/") 
+        call append(line(".")+5, "")
+    endif
+    if expand("%:e") == 'cpp'
+        call append(line(".")+6, "#include<iostream>")
+        call append(line(".")+7, "using namespace std;")
+        call append(line(".")+8, "")
+    endif
+    if &filetype == 'c'
+        call append(line(".")+6, "#include<stdio.h>")
+        call append(line(".")+7, "")
+    endif
+    if expand("%:e") == 'h'
+        call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
+        call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
+        call append(line(".")+8, "#endif")
+    endif
+    if &filetype == 'java'
+        call append(line(".")+6,"public class ".expand("%:r"))
+        call append(line(".")+7,"")
+    endif
+    "新建文件后，自动定位到文件末尾
+endfunc 
+autocmd BufNewFile * normal G
 
 "颜色主题设置
 set t_Co=256
@@ -390,7 +473,8 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set fileencoding=utf-8
 " set fileencodings=ucs-bom,utf-8,chinese
 set ambiwidth=double
-set nowrap "自动换行
+set wrap "自动换行
+set showmatch
 
 "设置无备份
 set nobackup
@@ -400,6 +484,12 @@ set nowritebackup
 " YCM 配置
 let g:ycm_global_ycm_extra_conf = "~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
 let g:ycm_key_invoke_completion=''
+" 设置跳转到方法/函数定义的快捷键 
+nnoremap <leader>j :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" 最小自动触发补全的字符大小设置为 3 
+let g:ycm_min_num_of_chars_for_completion = 3 
+" YCM的previw窗口比较恼人，还是关闭比较好 
+set completeopt-=preview 
 let g:ycm_filetype_blacklist = {
       \ 'tagbar' : 1,
       \ 'qf' : 1,
@@ -439,47 +529,61 @@ nnoremap <BS> gg
 " 快速选择粘贴的文本
 noremap gV `[v`]
 
+nnoremap <leader>q :call QuickfixToggle()<cr>
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+
+" Quick run via <F5>
+nnoremap <F5> :call <SID>compile_and_run()<CR>
+
+augroup SPACEVIM_ASYNCRUN
+    autocmd!
+    " Automatically open the quickfix window
+    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
+augroup END
+
+function! s:compile_and_run()
+    exec 'w'
+    if &filetype == 'c'
+        exec "AsyncRun! gcc % -o %<; time ./%<"
+    elseif &filetype == 'cpp'
+       exec "AsyncRun! g++ -std=c++11 % -o %<; time ./%<"
+    elseif &filetype == 'java'
+       exec "AsyncRun! javac %; time java %<"
+    elseif &filetype == 'sh'
+       exec "AsyncRun! time bash %"
+    elseif &filetype == 'python'
+       exec "AsyncRun! time python %"
+    endif
+endfunction
+
 " 宏测试
 let @m = "Y6GpF1C7 112joNew text.ZZ"
-
-" 按F5编译运行
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'java' 
-		exec "!javac %" 
-		exec "!time java %<"
-	elseif &filetype == 'sh'
-		:!time bash %
-	elseif &filetype == 'python'
-		exec "!time python2.7 %"
-    elseif &filetype == 'html'
-        exec "!firefox % &"
-    elseif &filetype == 'go'
-"        exec "!go build %<"
-        exec "!time go run %"
-    elseif &filetype == 'mkd'
-        exec "!~/.vim/markdown.pl % > %.html &"
-        exec "!firefox %.html &"
-	endif
-endfunc
 
 map <F6> :call FormartSrc()<CR>
 " define FormartSrc()  代码格式优化
 func FormartSrc()
 exec "w"
+
 if &filetype == 'py'||&filetype == 'python'
     exec "r !autopep8 -i --aggressive %"
 endif
 exec "e! %"
 endfunc
 " end FormartSrc 
+
+" DelimitMate 自动补全引号插件设置
+au FileType python let b:delimitMate_nesting_quotes = ['"']      " Python特殊设置
 
 au BufNewFile,BufRead *.py
 \ set tabstop=4 | 
@@ -492,5 +596,11 @@ au BufNewFile,BufRead *.py
 
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" 超过80个字符用下划线突出显示
+"au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . &textwidth . 'v.\+', -1)
+"hi Over80 ctermfg=red ctermbg=White
+"au BufNewFile,BufRead *.py match Over80 '\%>80v.*'
+
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
