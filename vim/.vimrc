@@ -48,17 +48,12 @@ Plug 'w0rp/ale'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
+Plug 'liuchengxu/space-vim-dark'
 
 " ale plugin must install flake8 using 'brew install flake8'
 let g:ale_history_log_output = 1
-let g:ale_sign_column_always = 1
+"let g:ale_sign_column_always = 1
 let g:ale_linters = { 'python': ['flake8'], }
-
-
-"function ALE() abort
-"    return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
-"endfunction
-"let g:airline_section_error = '%{ALE()}'
 
 function! LinterStatus() abort
     let l:counts = ale#statusline#Count(bufnr(''))
@@ -77,6 +72,7 @@ set statusline=%{LinterStatus()}
 
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 1
+let g:ale_list_window_size = 6
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 1
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
@@ -204,7 +200,8 @@ Plug 'junegunn/fzf.vim'
 
 " 主题
 Plug 'molokai'
-Plug 'Solarized'
+"Plug 'Solarized'
+Plug 'altercation/vim-colors-solarized'
 " Plug 'MattesGroeger/vim-bookmarks'
 " bookmark  mm 添加书签,  mn 移动书签  mp 移动到前一个书签  ma 删除所有书签
 
@@ -361,15 +358,18 @@ autocmd BufNewFile * normal G
 
 "颜色主题设置
 set t_Co=256
-let g:solarized_termcolors=16
+let g:solarized_termcolors=256
 
 " -----------------------
 " 两种流行风格的主题
 " -----------------------
 "colorscheme molokai
 "set background=dark
-colorscheme solarized
-set background=light
+"colorscheme solarized
+"set background=dark
+colorscheme space-vim-dark
+highlight Comment cterm=italic
+let g:space_vim_dark_background = 234
 
 " yank text to the OS X clipboard  将文本复制到OSX剪贴板中
 noremap <leader>y    "*y

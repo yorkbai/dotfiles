@@ -174,7 +174,7 @@ alias git=hub
 
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxegedabagacad
-[[ $TMUX = "" ]] && export TERM="xterm-256color"
+[[ $TMUX = "" ]] && export TERM="xterm-256color-italic"
 
 #display zsh command line status for vi-mode
 VIMODE='-- INSERT --'
