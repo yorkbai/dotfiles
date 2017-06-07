@@ -14,6 +14,9 @@ vmap <Leader>P "+P
 " modify file without change to root
 cmap w!! w !sudo tee > /dev/null %
 
+" yapf format
+autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
+
 "vim-plug 插件管理器 , Make sure you use single quotes
 call plug#begin('~/.vim/plugged')
 
@@ -70,11 +73,11 @@ endfunction
 
 set statusline=%{LinterStatus()}
 
-let g:ale_open_list = 1
-let g:ale_keep_list_window_open = 1
-let g:ale_list_window_size = 6
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+"let g:ale_open_list = 1
+"let g:ale_keep_list_window_open = 1
+"let g:ale_list_window_size = 6
+"let g:ale_set_loclist = 0
+"let g:ale_set_quickfix = 1
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'

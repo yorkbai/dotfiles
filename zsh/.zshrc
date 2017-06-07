@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/yorkbai/.oh-my-zsh
 
@@ -128,8 +125,9 @@ plugins=(git-extras git osx z brew-cask brew vi-mode  extract web-search wd iwho
 
 # User configuration
 
+# If you come from bash you might have to change your $PATH.
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
-export PATH=$HOME/bin:$PATH
+export PATH=/usr/local/Frameworks/Python.framework/Versions/2.7/bin:$HOME/bin:$PATH
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PYTHONPATH=/Users/yorkbai/bin/dbgp/pythonlib
 # export MANPATH="/usr/local/man:$MANPATH"
