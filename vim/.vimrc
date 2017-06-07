@@ -358,7 +358,7 @@ autocmd BufNewFile * normal G
 
 "颜色主题设置
 set t_Co=256
-let g:solarized_termcolors=256
+let g:solarized_termcolors=16
 
 " -----------------------
 " 两种流行风格的主题
@@ -565,6 +565,18 @@ function! s:compile_and_run()
     elseif &filetype == 'python'
        exec "AsyncRun! time python %"
     endif
+endfunction
+
+" Automatically quit Vim if quickfix window is the last
+au BufEnter * call MyLastWindow()
+function! MyLastWindow()
+  " if the window is quickfix go on
+  if &buftype=="quickfix"
+    " if this window is last on screen quit without warning
+    if winbufnr(2) == -1
+      quit!
+    endif
+  endif
 endfunction
 
 " 宏测试

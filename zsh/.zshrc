@@ -23,6 +23,7 @@ setopt HIST_NO_STORE
 # setopt EXTENDED_HISTORY
 setopt extended_glob
 setopt correct
+setopt hist_ignore_space
 autoload -U zmv
 autoload -U colors && colors
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes, No, Abort, Edit) "
@@ -30,7 +31,6 @@ export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes
 # 为方便复制，右边的提示符只在最新的提示符上显示
 setopt transient_rprompt
 
-setopt hist_ignore_space
 alias cd=" cd"
 alias ls=" ls -G"
 alias pwd=" pwd"
@@ -187,6 +187,7 @@ zle -N zle-keymap-select
 
 export KEYTIMEOUT=1
 RPROMPT='%{$fg[blue]%}${VIMODE}%{$reset_color%}'
+ZLE_RPROMPT_INDENT=0
 # setting completed
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
