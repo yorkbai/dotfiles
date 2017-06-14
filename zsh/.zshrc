@@ -31,7 +31,7 @@ setopt transient_rprompt
 alias cd=" cd"
 alias ls=" ls -G"
 alias pwd=" pwd"
-alias cat=" cat"
+alias cat=" ccat"
 alias -s sh=vi
 alias -s ini=vi
 alias -s md=vi
