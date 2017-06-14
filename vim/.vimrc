@@ -25,16 +25,18 @@ filetype indent on  " 打开文件类型缩进支持
 set autoindent
 set smartindent
 set autoread
+set showcmd
+set showmode
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限"
 set tabstop=4
 set shiftwidth=4
-set expandtab
+set expandtab     " tab被扩展为空格
 set modeline      " 底部的模式行
 set cursorline    " 高亮光标所在行
 set cursorcolumn  " 高亮光标所在列
-set smartcase   " 搜索时，智能大小写
-set incsearch   " incremental search 
-set autochdir   " 打开文件时，自动 cd 到文件所在目
+set smartcase     " 搜索时，智能大小写
+set incsearch     " incremental search 
+set autochdir     " 打开文件时，自动 cd 到文件所在目
 " 文件编码
 set fenc=utf-8
 set fencs=utf-8,gbk,gb18030,gb2312,cp936,usc-bom,euc-jp
@@ -44,7 +46,7 @@ set rnu
 " 语法折叠
 set foldmethod=indent
 set foldcolumn=0  " 设置折叠区域的宽度
-set foldlevel=99
+set foldlevel=10
 " 用空格键来开关折叠
 " nnoremap <space>  @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 " 加快速度
@@ -62,15 +64,13 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set fileencoding=utf-8
 " set fileencodings=ucs-bom,utf-8,chinese
 set ambiwidth=double
-set wrap "自动换行
+set wrap            "自动折行,与textwidth控制的自动换行有区别
+set linebreak 
 set showmatch
 " 设置无备份
 set nobackup
 set nowritebackup
 set noswapfile
-" 在文件中快速跳转
-" nnoremap <CR> 
-" nnoremap <BS> gg
 " 快速选择粘贴的文本
 noremap gV `[v`]
 " check whitespace and display it
@@ -165,6 +165,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'davidhalter/jedi-vim'
 Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/skywind3000/asyncrun.vim'
@@ -193,7 +194,12 @@ call plug#end()
 " <leader>a-2<space> 倒数第二个空格对齐
 " <leader>a*<space> 所有空格依次对齐
 " 右对齐
-" ,a<Enter>*<space>
+" <leader>a<Enter>*<space>
+" 也可用如下
+" :easyalign=is
+" :easyalign=id
+" :easyalign=in
+" :easyalign -= (按最后一个=)
 " --------------------
 xmap <leader>a  <Plug>(EasyAlign)
 nmap <leader>a  <Plug>(EasyAlign)
@@ -263,7 +269,7 @@ let g:limelight_priority = -1
 " --------------------
 "  jedi-vim
 " ---------support command---------
-" ompletion <C-Space>
+" Completion <C-Space>  注意：需手工呼出
 " Goto assignments <leader>g (typical goto function)
 " Goto definitions <leader>d (follow identifier as far as possible, includes imports and statements) 跳转到函数定义处
 " Show Documentation/Pydoc K (shows a popup with assignments)
@@ -278,6 +284,15 @@ let g:limelight_priority = -1
 let g:NERDTreeWinSize = 20
 let g:tagbar_width=20
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+" --------------------
+" tpope/vim-commentary
+" gcc  "comment one line
+" gc   " comment out the selection in virtual mode
+" gcu " cancel comment
+" --------------------
+autocmd FileType apache setlocal commentstring=#\ %s
+
 
 " --------------------
 "  vim-fugitive
@@ -332,12 +347,12 @@ let g:NERDTrimTrailingWhitespace = 1
 map <F4> <leader>c<space>
 
 " --------------------
-"  Ack
+" Ack
 " --------------------
 map <F3> :Ack -i 
 
 " --------------------
-"  ctrlp
+" ctrlp
 " --------------------
 let g:ctrlp_map = '<c-f>'
 let g:ctrlp_show_hidden = 0
@@ -357,18 +372,18 @@ nmap s <Plug>(easymotion-overwin-f2)
 map <Leader><leader>. <Plug>(easymotion-repeat)
 
 " --------------------
-"  fzf
+" fzf
 " --------------------
 nnoremap <Leader>o :FZF<CR>
 let g:fzf_layout = { 'down': '~20%' }
 
 " --------------------
-"  dash 
+" dash 
 " --------------------
 map <F8> :Dash<cr>
 
 " --------------------
-"  tagbar
+" tagbar
 " --------------------
 let g:tagbar_width=40
 map  <F12> :TagbarToggle<CR>
@@ -376,7 +391,11 @@ map! <F12> <Esc>:TagbarToggle<CR>
 
 " --------------------
 "  vim-surround
-"  cs'" -> change ' to " , ds[ -> delete [ 这个括号 , ysiw} --> 将当前词用{}括起来 
+"  cs'" -> change ' to "   改变包围 
+"  ds[ -> delete [ 这个括号 
+"  ysiw} --> 将当前词用{}括起来
+"  yss + '"{[(    包围一行
+"  ysiw + '"{[(    包围单词
 " --------------------
 
 
@@ -401,7 +420,7 @@ let g:airline_theme="molokai"
 set laststatus=2
 let g:airline_powerline_fonts = 1   
 
-"打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
+" 打开tabline功能,方便查看Buffer和切换,省去了minibufexpl插件
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -445,9 +464,9 @@ map <leader>9 :b 9<CR>
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-"退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 如果不需要可以关掉
+" 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 如果不需要可以关掉
 set t_ti= t_te=
-"搜索忽略大小写
+" 搜索忽略大小写
 set ignorecase
 
 " 使用F2键控制粘贴是否自动缩进
@@ -464,66 +483,42 @@ if has("autocmd")   " 打开时光标放在上次退出时的位置
         \ endif
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  新文件标题
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"新建.c,.h,.sh,.py,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
-""定义函数SetTitle，自动插入文件头 
-func SetTitle() 
-    "如果文件类型为.sh文件 
-    if &filetype == 'sh' 
-        call setline(1,"\#!/bin/bash") 
-        call append(line("."), "") 
-    elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# -*- coding=utf-8 -*-")
-        call append(line(".")+1, "") 
-    elseif &filetype == 'ruby'
-        call setline(1,"#!/usr/bin/env ruby")
-        call append(line("."),"# encoding: utf-8")
-        call append(line(".")+1, "")
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" auto add file header
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufNewFile *.py 0r /Users/yorkbai/workspace/useful_code/git/dotfiles/vim/.vim/vim_template/vim_header_for_python
+autocmd BufNewFile *.py ks|call FileName()|'s
+autocmd BufNewFile *.py ks|call CreatedTime()|'s
 
-        "    elseif &filetype == 'mkd'
-        "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
-    else 
-        call setline(1, "/*************************************************************************") 
-        call append(line("."), "	> File Name: ".expand("%")) 
-        call append(line(".")+1, "	> Author: ") 
-        call append(line(".")+2, "	> Mail: ") 
-        call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
-        call append(line(".")+4, " ************************************************************************/") 
-        call append(line(".")+5, "")
-    endif
-    if expand("%:e") == 'cpp'
-        call append(line(".")+6, "#include<iostream>")
-        call append(line(".")+7, "using namespace std;")
-        call append(line(".")+8, "")
-    endif
-    if &filetype == 'c'
-        call append(line(".")+6, "#include<stdio.h>")
-        call append(line(".")+7, "")
-    endif
-    if expand("%:e") == 'h'
-        call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
-        call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
-        call append(line(".")+8, "#endif")
-    endif
-    if &filetype == 'java'
-        call append(line(".")+6,"public class ".expand("%:r"))
-        call append(line(".")+7,"")
-    endif
-endfunc 
-"新建文件后，自动定位到文件末尾
+autocmd BufNewFile *.sh 0r /Users/yorkbai/workspace/useful_code/git/dotfiles/vim/.vim/vim_template/vim_header_for_sh
+autocmd BufNewFile *.sh ks|call FileName()|'s
+autocmd BufNewFile *.sh ks|call CreatedTime()|'s
+
+fun FileName()
+  if line("$") > 10
+    let l = 10
+  else
+    let l = line("$")
+  endif
+  exe "1," . l . "g/File Name:.*/s/File Name:.*/File Name: " .expand("%")
+endfun
+
+fun CreatedTime()
+  if line("$") > 10
+    let l = 10
+  else
+    let l = line("$")
+  endif
+  exe "1," . l . "g/Created Time:.*/s/Created Time:.*/Created Time: " .strftime("%Y-%m-%d %T")
+endfun
+" end auto add file header
+
+" 新建文件后,自动定位到文件末尾
 autocmd BufNewFile * normal G
 
 " -----------------------
-" 两种流行风格的主题
+" 主题
 " -----------------------
-"colorscheme molokai
-"set background=dark
-"colorscheme solarized
-"set background=dark
 set termguicolors
 colorscheme space-vim-dark
 highlight Comment cterm=italic
@@ -605,7 +600,6 @@ function! MyLastWindow()
   endif
 endfunction
  
-
 " --------------------
 "  asyncrun
 " --------------------
@@ -631,23 +625,12 @@ function! s:compile_and_run()
     endif
 endfunction
 
-map <F6> :call FormartSrc()<CR>
-" define FormartSrc()  代码格式优化
-func FormartSrc()
-exec "w"
-
-if &filetype == 'py'||&filetype == 'python'
-    exec "r !autopep8 -i --aggressive %"
-endif
-exec "e! %"
-endfunc
-" end FormartSrc 
-
-au BufNewFile,BufRead *.py
-\ set tabstop=4 | 
-\ set softtabstop=4 |
-\ set shiftwidth=4 |
-\ set textwidth=79 |
-\ set expandtab |
-\ set autoindent |
-\ set fileformat=unix  |
+" au BufNewFile,BufRead *.py
+"  \ set tabstop=4 | 
+"  \ set softtabstop=4 |
+"  \ set shiftwidth=4 |
+"  \ set textwidth=100 |
+"  \ set expandtab |
+"  \ set wrap      |
+"  \ set autoindent |
+"  \ set fileformat=unix  |
