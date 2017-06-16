@@ -16,6 +16,7 @@ set mouse=a
 " vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 " omap s :normal vs<CR>
 
+
 " 语法高亮
 syntax enable
 set so=7
@@ -519,13 +520,17 @@ autocmd BufNewFile * normal G
 " -----------------------
 " 主题
 " -----------------------
-set termguicolors
+" set termguicolors
+"
+set t_Co=256
 colorscheme space-vim-dark
-highlight Comment cterm=italic
 let g:space_vim_dark_background = 234
 color space-vim-dark
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+highlight Comment cterm=italic
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 " yank text to the OS X clipboard  将文本复制到OSX剪贴板中
 noremap <leader>y    "*y
@@ -534,7 +539,7 @@ noremap <leader>yy   "*Y"
 " Preserve indentation while pasting text from the OS X clipboard  在粘贴OSX剪贴板中的文本时保留缩进, 与下面的限制缩进配置效果相同
 noremap <leader>p :set paste<CR>:put *<CR>:set nopaste<CR>
 
-"限制大量文本粘贴时的自动缩进,for tmux to automatically set paste and nopaste mode at the time pasting (as happens in VIM UI)
+" 限制大量文本粘贴时的自动缩进,for tmux to automatically set paste and nopaste mode at the time pasting (as happens in VIM UI)
 function! WrapForTmux(s)
   if !exists('$TMUX')
      return a:s
