@@ -29,9 +29,11 @@ export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r?$reset_color (Yes
 setopt transient_rprompt
 
 alias cd=" cd"
+alias ssh="TERM=xterm-256color ssh"
 alias ls=" ls -G"
 alias pwd=" pwd"
 alias cat=" ccat"
+# alias tmux='tmux -2'
 alias -s sh=vi
 alias -s ini=vi
 alias -s md=vi

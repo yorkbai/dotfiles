@@ -8,7 +8,7 @@ let mapleader="\<Space>"
 set mouse=a
 
 " --------------------
-" 查找与替换升级
+" 查找与替换升级用法
 " 使用 /something 查找
 " 使用 cs 替换第一个，然后按 <Esc> 键
 " 使用 n.n.n.n.n. 查找以及替换余下匹配项, 不知为何用，只能用cw
@@ -16,10 +16,11 @@ set mouse=a
 " vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 " omap s :normal vs<CR>
 
-
 " 语法高亮
 syntax enable
 set so=7
+set nu
+set rnu
 filetype on         " 打开文件类型支持
 filetype plugin on  " 打开文件类型插件支持
 filetype indent on  " 打开文件类型缩进支持
@@ -42,8 +43,6 @@ set autochdir     " 打开文件时，自动 cd 到文件所在目
 set fenc=utf-8
 set fencs=utf-8,gbk,gb18030,gb2312,cp936,usc-bom,euc-jp
 set enc=utf-8
-set nu
-set rnu
 " 语法折叠
 set foldmethod=indent
 set foldcolumn=0  " 设置折叠区域的宽度
@@ -63,7 +62,6 @@ set encoding=utf-8
 set langmenu=zh_CN.UTF-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1 
 set fileencoding=utf-8
-" set fileencodings=ucs-bom,utf-8,chinese
 set ambiwidth=double
 set wrap            "自动折行,与textwidth控制的自动换行有区别
 set linebreak 
@@ -77,34 +75,24 @@ noremap gV `[v`]
 " check whitespace and display it
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
 " 保存文件
 nnoremap <Leader>w :w!<CR>
-
 " modify file without change to root
 command W w !sudo tee % > /dev/null
-
 " yapf format python file
 autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
-
 " 打开／关闭目录树
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
-
 "将tab替换为空格
 nmap tt :%s/\t/    /g<CR>
-
 " 宏测试
 let @m = "Y6GpF1C7 112joNew text.ZZ"
-
 " for python docstring ", 特别有用
 au FileType python let b:delimitMate_nesting_quotes = ['"']
-
 "搜索高亮
 set hlsearch
-"set nohlsearch  "关闭搜索高亮
-
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
@@ -112,7 +100,6 @@ if has("win16") || has("win32")
 else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
-
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -139,7 +126,6 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  vim-plug Manager, Make sure you use single quotes
@@ -247,7 +233,7 @@ function! s:goyo_after()
 endfunction
 
 let g:goyo_callbacks = [function('s:goyo_before'), function('s:goyo_after')]
-nmap <leader><leader>h :Goyo<cr>
+nmap <leader>h :Goyo<cr>
 " 进入goyo模式后自动触发limelight,退出后则关闭
 autocmd User GoyoEnter Limelight
 autocmd User GoyoLeave Limelight!
@@ -386,7 +372,7 @@ map <F8> :Dash<cr>
 " --------------------
 " tagbar
 " --------------------
-let g:tagbar_width=40
+let g:tagbar_width=30
 map  <F12> :TagbarToggle<CR>
 map! <F12> <Esc>:TagbarToggle<CR>
 
@@ -520,15 +506,25 @@ autocmd BufNewFile * normal G
 " -----------------------
 " 主题
 " -----------------------
-" set termguicolors
-"
-set t_Co=256
-colorscheme space-vim-dark
-let g:space_vim_dark_background = 234
-color space-vim-dark
-let &t_ZH="\e[3m"
-let &t_ZR="\e[23m"
+let g:solarized_termtrans = 1
+colorscheme solarized
+call togglebg#map("<F6>")
+hi Visual cterm=NONE ctermbg=White ctermfg=Black
 highlight Comment cterm=italic
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+" colorscheme molokai
+
+" -----------------------
+"  for space-vim-dark
+" -----------------------
+" set t_Co=256
+" colorscheme space-vim-dark
+" let &t_ZH="\e[3m"
+" let &t_ZR="\e[23m"
+" let g:space_vim_dark_background = 234
+" color space-vim-dark
+" highlight Comment cterm=italic
 " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
@@ -629,13 +625,3 @@ function! s:compile_and_run()
        exec "AsyncRun! time python %"
     endif
 endfunction
-
-" au BufNewFile,BufRead *.py
-"  \ set tabstop=4 | 
-"  \ set softtabstop=4 |
-"  \ set shiftwidth=4 |
-"  \ set textwidth=100 |
-"  \ set expandtab |
-"  \ set wrap      |
-"  \ set autoindent |
-"  \ set fileformat=unix  |
