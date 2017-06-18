@@ -18,7 +18,7 @@ set mouse=a
 
 " 语法高亮
 syntax enable
-set so=7
+set so=3
 set nu
 set rnu
 filetype on         " 打开文件类型支持
@@ -506,15 +506,16 @@ autocmd BufNewFile * normal G
 " -----------------------
 " 主题
 " -----------------------
-let g:solarized_termtrans = 1
-colorscheme solarized
-call togglebg#map("<F6>")
-hi Visual cterm=NONE ctermbg=White ctermfg=Black
+" set termguicolors
+" let g:solarized_termtrans = 1
+" colorscheme solarized
+" call togglebg#map("<F6>")
+colorscheme molokai
+let g:molokai_original = 1
+let g:rehash256 = 1
+set background=dark
 highlight Comment cterm=italic
-" let g:molokai_original = 1
-" let g:rehash256 = 1
-" colorscheme molokai
-
+hi Visual cterm=NONE ctermbg=White ctermfg=Black
 " -----------------------
 "  for space-vim-dark
 " -----------------------
