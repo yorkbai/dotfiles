@@ -136,11 +136,11 @@ Plug 'https://github.com/luofei614/vim-plug', { 'dir':'~/.vim/my'}
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'rizzatti/dash.vim'
-Plug 'Tagbar'
+Plug 'vim-scripts/Tagbar'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
-Plug 'vimim'
+Plug 'vim-scripts/vimim'
 Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-expand-region'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
@@ -162,7 +162,7 @@ Plug 'suan/vim-instant-markdown'
 Plug 'w0rp/ale'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'axiaoxin/vim-json-line-format'   " <Leader>wj   格式化为json格式
-Plug 'molokai'
+Plug 'vim-scripts/molokai'
 Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -448,7 +448,7 @@ map <leader>9 :b 9<CR>
 " --------------------------
 "  terryma/vim-expand-region
 " --------------------------
-vmap v <Plug>(expand_region_expand)
+vmap v     <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 如果不需要可以关掉
