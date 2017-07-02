@@ -1,0 +1,66 @@
+# sum integers from a file or stdin, one integer per line:
+printf '1\n2\n3\n' | awk '{ sum += $1} END {print sum}'
+
+# using specific character as separator to sum integers from a file or stdin
+printf '1:2:3' | awk -F ":" '{print $1+$2+$3}'
+
+# print a multiplication table
+seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
+
+# Specify output separator character
+printf '1 2 3' | awk 'BEGIN {OFS=":"}; {print $1,$2,$3}'
+
+
+# awk
+cat log4jdbc.out | awk  '!/call/ {if($(NF-1) > 10000) print }'> 1.log   抽出不包含含有call的行且倒数第二字段值大于10000的
+
+# 批量删除
+  命令： find . -name 'postgresql.conf' | xargs sed -i '523,$d'     (递归查找当前目录下所有postgresql.conf文件并将523行到文末行全部删除)，在linux下可以，osx下提示“sed: 1: "./gpseg0/postgresql.conf": invalid command code .）
+解决：find . -name 'postgresql.conf' | xargs sed -i “.bak"  '523,$d'  （会生成.bak备份文件）
+若不想备份，留空即可：
+      find . -name 'postgresql.conf' | xargs sed -i “ ”  '523,$d' 
+# 批量替换
+  sed -i “s/string_old/string_new/g” grep -rl string_old ./
+
+
+# 删除最后5行
+ --linux:   #find . -name 'postgre*' | xargs -i sed  -i -n ':a;$! N;s/\n/\n/4;$q;Ta;P;D' {} 
+ --osx:     #for i in 1 2 3 4 5 ; do sed -i '' '$ d' 1.ini ; done
+
+# other
+ --osx:     find . -type f | xargs sed -i '' -e 's/oldstring/newstring/g'
+            for i in 1 2 3 4 ; do echo $i ; done
+
+cat *.txt | awk "NR==3"
+cat *.txt | sed -n '3p'
+
+# 获取两个时间之间的每行记录:
+start_time=`date -d "5 minutes ago" +"%H:%M:%S"`
+end_time=`date +"%H:%M:%S"`
+awk -v st="$start_time" -v et="$end_time" '{t=$2; if(t>=st && t<=et)  print}' $logpath | grep "accept" | wc -l
+
+# 按匹配模式删除：
+sed '/PATTERN/   d’ a.txt
+
+# 删除没有匹配上的行：
+sed ‘/pattern/ !d’  a.txt
+
+# 删除从m行开始，到匹配行之间
+sed ‘4,/Hello/ d’  a.txt
+
+# 只留下最后5行：
+sed -e :a -e '$q;N;6,$D;ba’ a.txt   (不修改原文件)
+sed -i ':a;$q;N;6,$D;ba’   a.txt  (修改原文件 , bash可用，zsh不行)
+tac a.txt | sed ‘1,5 !d’ | tac > b.txt && mv b.txt a.txt
+
+# 删除多行：（method1）:
+for((i=1;i<4;i++)); do sed -i ‘$ d' seq01.txt ; done    (删除最后三行,bash可用，osx+zsh不行)
+
+# delete the last 10 lines of a file
+sed -e :a -e '$d;N;2,10ba' -e 'P;D'   # method 1
+sed -n -e :a -e '1,10!{P;N;D;};N;ba'  # method 2
+
+# osx与linux使用不同版本的sed，在osx使用brew安装gnu-sed， 避免影响系统自带bsd sed
+$brew install gnu-sed --with-default-names
+$echo $PATH | grep -q '/usr/local/bin'; [ $? -ne 0 ] && export PATH=/usr/local/bin:$PATH
+重新登录即可使用gnu-sed (/usr/local/bin/sed)

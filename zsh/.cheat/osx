@@ -1,0 +1,228 @@
+# zsh命令行下使用代理下载github
+$ ALL_PROXY=socks5://127.0.0.1:1086 git clone https://github.com/5digits/dactyl.git
+
+# alfred workflow
+插件目录path: /Users/yorkbai/Library/Application Support/Alfred 2/Alfred.alfredpreferences/workflows
+google search插件gs查询出不来的话，可以更换dt到stormss试试
+#1password
+要启用1password，需要在1password的偏好设置-> 高级 中选中与第三方整合项。
+#browerswitcher
+bs/bso/bss/bsc  (将当前tab切换到其他浏览器打开)
+#快捷键呼出
+ option double
+#切换到其他浏览器
+url + 回车  （当前浏览器中的url调用其他浏览器打开）
+#fantastical2
+     fant something in sometime
+#pocket
+ 出现“your pocket list is empty!" : 在alfred输入 ： pocket wf:reset 进行重置即可。
+#layout
+key: lay
+#查看本机信息
+key:  about
+#刷新dns
+key: flush
+#packal search／update
+插件可以搜索or自动更新已安装的workflow , 由于无法直接使用google，需修改以下php文件中的google.com为github.com即可：
+functions.php:117: exec( "ping -c 1 -t 1 www.google.com", $pingResponse, $pingError);
+functions.php:122:    $connection = @fsockopen("www.google.com", 80, $errno, $errstr, 1);
+and
+report-usage-data.php:169: exec( "ping -c 1 -t 1 www.google.com", $pingResponse, $pingError);
+report-usage-data.php:174:    $connection = @fsockopen("www.google.com", 80, $errno, $errstr, 1);
+#dns
+ >dns 114
+ >dns default
+#timers
+>timer 1m 'doing something'
+
+#dr(default results)与fs（file search）区别：
+1.如果你想用Alfred使用File Search——find或者open或者in，你就需要在Default Results里的Search Scope设置可以索引到的路径才能搜索到你想要的文件
+#多个文件操作
+选中待操作文件后按“Fn” 弹出更多操作选项
+如果你想多文件操作，你就可以选中第一个文件后按Option+↑或者↓，选完按Option+→同样进入上图，即可进行操作。可以拷贝，移动等等。如果选错文件，按Option+←可以去除刚才选错的文件。按Option+CMD+/进入先前的路径，/和~符号可以进入用户主目录和系统根目录
+#secure shell & ssh plugin
+设置iterm2为默认处理，在iterm2中选择profile， 在url schemule中选ssh，确定。 然后执行：
+  /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -all local,system,user
+  重启launer service
+
+# 修饰键
+   control是⌃，option是⌥，command是⌘
+  
+#alfred
+  a) terminal finder   >command   启动命令行
+  b)aqi  “aqi \*\*\*"
+  c)kill   “kill \*\*\*"
+  d)v2ex      “v2ex \*\*\*"
+  e)youdao translate  “yd \*\*\*"
+  f) ip138 \*\*\*
+  g) "cip domainname"
+  h) ip (local ipaddress)
+# alfred破解
+    破解时必须先断开网络，运行破解程序，否则会提示“保存文件失败，请检查权限…”，将alfred程序拖入破解程序中完成破解。
+
+
+# OSX刷新dns缓存
+###EI captian版本(10.11.x)
+命令组合：sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; say DNS cache flushed； 当听到语音说：dns cache flushed，说明成功刷新了
+
+###在 OS X Yosemite v10.10.4 中，请使用以下“终端”命令来还原 DNS 缓存设置：
+sudo killall -HUP mDNSResponder
+
+### OS X Yosemite v10.10 至 v10.10.3 
+请使用以下“终端”命令来还原 DNS 缓存设置：
+sudo discoveryutil mdnsflushcache
+### OS X Mavericks、Mountain Lion 和 Lion
+请使用以下“终端”命令来还原 DNS 缓存设置：
+sudo killall -HUP mDNSResponder
+### Mac OS X v10.6
+请使用以下“终端”命令来还原 DNS 缓存设置：
+sudo dscacheutil -flushcache
+
+###修改DNS：
+打开系统偏好设置 点击网络 自己选择wifi网络或者有限网络
+点击高级 点击DNS ，在最下左方有个加号点击 自己添加一个DNS 。建议大家添加8.8.8.8 或者你在添加一个114.114.114.114 回车 点击 好, 点击 应用  这里你就正在使用了8.8.8.8或者114.114.114.114了
+
+#图标化popclip：
+    ＃defaults write com.pilotmoon.popclip UseShortTitles -bool YES
+    ＃killall PopClip && open -a PopClip
+    
+     popclip快捷键(自定义):  shift+command+x
+# finder
+打开finder，按住option ，点击工具栏中的”前往“，会出现”资料库“
+# osx install jdk
+      #brew cask install java
+# coderunner破解时必须断开网络。
+      #vi /etc/hosts
+        127.0.0.1 coderunnerapp.com
+    再输入运行coderrunner_key.dmg中生成程序得到的注册码即可。
+# OmniGraffle6序列号:
+   所有者:www.52mac.com
+   密钥:GUUZ-NOHG-YGQG-MNEP-FXXJ-JEPF-XXJ
+# keyboard maestro:
+    email: orsoo@orsoon.com
+    key:   FB57LHC6LC63DWMYGI
+# brew本地文件安装
+  - 问题描述：
+    在使用brew按照lrzsz时总无法下载lrzsz-0.12.20.tar.gz包，提示curl证书错误；安装fpp也遇到类似问题
+    
+   ##解决：
+
+  - 直接通过浏览器下载tar包，保存到/Library/Caches/Homebrew目录(>brew --cache 确定brew安装程序时的缓存保存目录),然后执行：# brew install lrzsz
+
+    ##lrzsz使用方法(rz和sz命令都是在ssh登录到远程主机上执行)：
+
+To send a file to a remote machine:
+
+- Type "rz" on the remote machine
+- Select the file(s) on the local machine to send
+- Wait for the coprocess indicator to disappear
+
+The receive a file from a remote machine
+
+- Type "sz filename1 filename2 … filenameN" on the remote machine
+- Select the folder to receive to on the local machine
+- Wait for the coprocess indicator to disappear
+
+# 安装tldr (python client)
+     # sudo pip install tldr.py
+     # cd /Users/yorkbai/workspace/useful_code/python/
+     # git clone https://github.com/tldr-pages/tldr.git
+     # tldr init
+     # tldr update
+     # tldr find ssh
+# install tldr (c++ client)
+brew install tldr
+     
+# 安装cheat
+    # sudo pip install cheat
+    # cheat -s find
+    # cheat -d
+    
+# 使用brew安装python自动补全
+      osx内置的python无法使用python的自动补全，参考：https://nicolas.perriault.net/code/2010/python-tab-completion/
+      ps： ＃brew install readline python 安装后需要重启iterm2生效。
+
+#mosh (ssh代替品)
+osx:  brew install mobile-shell
+ubuntu:  apt-get install mosh
+centos:   yum install mosh
+
+- 场景: 原来使用ssh proxycommand利用跳板机登陆服务器，比如跳板机： j   第三台： 162
+换用mosh后命令变为： #mosh j ssh 162   (这种方式162上不需要安装mosh)
+
+#oh-my-zsh plugin
+- osx下不能直接在.zshrc的plugin＝中直接添加command-not-found插件。
+https://github.com/Homebrew/homebrew-command-not-found
+＃brew tap homebrew/command-not-found
+执行上行命令后在.zshrc中添加： if brew command command-not-found-init > /dev/null; then eval "$(brew command-not-found-init)"; fi
+＃source ~/.zshrc生效
+
+
+- osx中彩色man配置不能直接在.zshrc的plugin＝中直接添加coloried-man
+需在.zshrc中添加：
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;47;34m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+export LESS=-r
+
+###osx 录制屏幕
+打开quickplayer， 点击ctrl+command+n 即可。 
+
+###命令行快捷键
+ctrl+a  行首
+ctrl+e  行尾
+ctrl+w  向前删除一个word
+ctrl+b  pushline
+#清除history
+使用zsh，删除~/.zsh_history文件内容即可。 or  $echo "" > ~/.zsh_history & exec $SHELL -l
+
+#取消F1～F12系统默认影射
+-mission control  (F11&F12)
+-choice "use all F1,F2,etc as stande ..."  in keyboard config page(系统偏好设置)
+
+#osx输入法看不见候选词
+－首先将输入法切换成美式输入法，然后打开activity monitor，将其中的中文输入法任务中止。回到输入法切换项，将输入法切换回中文输入法，即可
+－ 关机重启亦可
+
+$sudo /usr/libexec/locate.updatedb  (osx更新locate 数据库)
+
+#homebrew使用proxy  (前提：本机使用多态＋shadowsocksX-NG1.3)
+$ALL_PROXY=socks5://127.0.0.1:1086 brew update   
+url: https://github.com/shadowsocks/ShadowsocksX-NG/releases/ , 直接安装1.3有问题，需先安装1.2 ，再安装1.3就ok
+
+#install elinks
+brew install --devel elinks
+
+#查看rtf富文本文件
+$textutil -convert txt **.rtf
+$cat **.txt
+
+# alfred不能搜索任何文件／文件夹／程序
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+
+# osx close SIP 
+1) reboot osx and using "command+R" enter recovery mode
+2) enter "terminal" and run "csrutil enable --without debug"
+3) enter "reboot" 
+
+#fantastical2
+这里再为大家总结一些输入格式，这些技巧让你更快地创建日程和提醒：
+
+时间：at 1pm tommorow / at 11:30 Tuesday / from September 11-27
+地点：at somewhere
+人员：with whom
+重复：every Wednesday 8pm / every year on 9/15 / on the 3nd Sunday of every month at 6pm
+待办：task / todo / reminder / remind me to
+提醒：alert 5min
+
+#brew安装组件版本切换
+当使用brew install安装组件时，用
+ brew upgrade
+ 会自动更新到新版，如tmux，vim等，有时会需要回滚到旧版：
+brew list --versions | grep tmux
+brew switch tmux 2.3_3 (回滚到2.3_3版本)
+

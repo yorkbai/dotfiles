@@ -1,0 +1,40 @@
+# 磁盘读写
+yum install iotop
+yum install atop
+iotop -c
+iotop -a
+atop
+iostat -xdm 1
+
+# memory
+# 内存主要消耗在三个方面：1. 进程消耗。 2. slab消耗 3.pagetable消耗。
+wget https://www.selenic.com/smem/download/smem-1.4.tar.gz
+./smem -t
+./smem -u
+./smem -w
+# nmon
+wget http://sourceforge.net/projects/nmon/files/nmon_linux_14i.tar.gz
+tar zxvf nmon_linux_14i.tar.gz
+chmod 777 nmon_x86_64_sles11   #适用于centos6.5
+./nmon_x86_64_sles11
+说明：
+按C显示CPU信息，再按一次C关闭
+按M显示内存
+按N显示网络
+按D显示硬盘
+
+# slab
+slabtop
+echo `cat /proc/slabinfo |awk 'BEGIN{sum=0;}{sum=sum+$3*$4;}END{print sum/1024/1024}'` MB
+
+# 回收内存
+注意：1、只在cache占用大量内存时导致系统内存不够用，系统运行缓慢的情况下使用；2、强制回收前需要先进行sync 同步数据到硬盘操作，避免强制回收时造成数据丢失；3、当buffer/cached使用的内存并不大时，而系统本身确实不足时无法回收
+echo 1 > /proc/sys/vm/drop_caches
+echo 2 > /proc/sys/vm/drop_caches
+echo 3 > /proc/sys/vm/drop_caches
+使用1时只清理pagecahe ，使用2清理dentries和inodes ，使用3时三者都清理
+
+# cpu
+
+# network
+nethogs

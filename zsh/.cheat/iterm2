@@ -1,0 +1,75 @@
+# iterm2快捷键
+  - cmd++  cmd+- —>缩放session中字体
+  - cmd+[  or  cmd+]  ——> 在一个tab中切换panes
+  - cmd+shift+enter  ——> 最大化当前panes，类似tmux的prefix+z
+  - option+cmd+e     ---->  预览全部tab
+  - cmd+enter    ---->窗口最大化
+  - 按住cmd，点击目录  --> 在finder中打开此目录
+  - cmd+f 打开查找窗口，输入关键字，用tab（向右），shift+tab(向左进行选择)，同时会保存到系统剪贴板，按esc退出 。然后就可以用option+enter在需要的地方随时粘贴。 --> shift+cmd+h （打开粘贴历史记录）
+  - cmd+d (纵向分隔窗口) / shift+cmd+d（横向分隔窗口）
+  - cmd+shift+h  (打开粘贴历史窗口)
+  - cmd+; (打开自动补全提示窗口)
+  - shift+cmd+⬆️，⬇️  （找到上一个／下一个命令提示符）
+  - cmd+/   找鼠标
+  - option+cmd+v  高级粘贴 
+  - 快照返回： Cmd + Option + B 就会在界面上显示一个时间轴
+  - iterm2变换pane大小:  shift+command+enter
+  - alt+command+f     (iterm2 passwd manager调出)
+  - iterm2移动pane： command+shift+]   or   command+shift+[
+  - iterm2命令行编辑： ctrl-x ctrl-e
+  - alt+command+;    (高亮当前命令行)
+  - command+[ / ]   切换窗口
+
+# 隐藏iterm dock图标
+/usr/libexec/PlistBuddy -c "Add :LSUIElement bool true" /Applications/iTerm.app/Contents/Info.plist
+
+# 恢复iterm dock图标
+/usr/libexec/PlistBuddy -c "Delete :LSUIElement" /Applications/iTerm.app/Contents/Info.plist
+curl -L https://iterm2.com/misc/`basename$SHELL`_startup.in >> ~/.iterm2_shell_integration.`basename $SHELL`
+
+# iterm2 beta3 特性
+ - download&upload
+ -在本机和远程ssh登录后都需要安装shell interation(root权限)
+ -为使用download，需要在.bash_profile or .zshrc 里添加：
+     export iterm2_hostname=ip
+ -远程下载日志: /var/log/system.log
+ - 安装shell整合后会在每个命令最前端显示蓝色小箭头，双指点击显示详细内容。
+ - 使用 option + cmd + v，粘贴之前可以先修改。
+ - 开启时间戳功能后，将在最后侧显示时间戳。开启方法：View > Show Timestamps，或者使用快捷键 shift + cmd +e 
+ - 可以将tab栏放在左侧，在设置中的Appearance中更改。
+ - 使用快捷键 cmd + z，可以恢复关闭的session、tab以及windows等
+ - version3中引入的新概念。徽标是显示在右上角的一段可以自定义的文字
+ 
+#iterm2快捷键呼出
+command + .
+
+#安全删除
+  $brew install trash (方法1， 推荐) (链接到/usr/local/bin/trash,用brew安装的trash会和python安装的trash-cli冲突)
+  echo "alias rm="trash"" >> ~/.zshrc 
+  $easy_install trash-cli  (方法2)
+
+#iterm2下用finder打开当前目录
+ open .
+
+#在finder下用iterm2打开
+ 调出alfred , 输入fi
+ 方法2:   调出alfred , 输入 tw , 然后按alt+回车
+
+#plugin
+- web-search      $ baidu ***  or  google  ***
+- wd              $ cd /home/**/aa    $wd add test   $ wd test
+- zshautosuggestions  (简单测试后删除，继续关注)
+- iwhois          $ whois baidu.com
+- extract         $ x *.zip|tar.gz|bzip2...
+- z               $ z **
+- vi-mode         ps: 命令行vi模式
+
+#plugin
+- web-search      $ baidu ***  or  google  ***
+- wd              $ cd /home/**/aa    $wd add test   $ wd test
+- zshautosuggestions  (简单测试后删除，继续关注)
+- iwhois          $ whois baidu.com
+- extract         $ x *.zip|tar.gz|bzip2...
+- z               $ z **
+- vi-mode         ps: 命令行vi模式
+

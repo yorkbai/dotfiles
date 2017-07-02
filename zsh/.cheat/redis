@@ -1,0 +1,18 @@
+
+#批量添加
+  cat /tmp/info.txt | /usr/local/bin/redis-cli -p 26388 —pipe
+  ps: —pipe参数有些高版本已不再需要，直接使用如下语句：
+  cat /tmp/info.txt | /usr/local/bin/redis-cli -p 26388
+
+  info.txt(文件格式如下)
+      set  key1 value1
+      set  key2 value2
+      ……..
+#导出
+[rdbtools](https://github.com/sripathikrishnan/redis-rdb-tools)
+    #pip install rdbtools
+    #rdb —command json /path/dump.rdb  > save_data.json
+
+#hash
+$hgetall key_name 
+$hset key field value  (like: hset aa name "york")

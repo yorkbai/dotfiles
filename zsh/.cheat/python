@@ -1,0 +1,54 @@
+# Basic example of server with python
+# Will start a Web Server in the current directory on port 8000
+# go to http://127.0.0.1:8000
+
+# Python v2.7
+python -m SimpleHTTPServer
+
+# Python 3
+python -m http.server 8000
+
+# SMTP-Server for debugging, messages will be discarded, and printed on stdout.
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+# Pretty print a json
+python -mjson.tool
+
+#ipdb调试python
+1. python -m ipdb *.py  
+
+2. 在需要断点的地方插入两行,然后运行程序
+import ipdb
+ipdb.set_trace() # 开启pdb提示
+
+常用的命令:
+n(下一个)
+ENTER(重复上次命令)
+q(退出)
+p<变量>(打印变量)
+c(继续)
+l(查找当前位于哪里)
+s(进入子程序)
+r(运行直到子程序结束)
+
+#osx 使用yapf格式化
+1.pip install yapf
+2.在~/.zshrc中增加yapf程序路径
+export PATH=/usr/local/Frameworks/Python.framework/Versions/2.7/bin:$PATH
+3.在~/.vimrc中增加：
+autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
+
+#快速启动http
+cd /path
+python -m SimpleHTTPServer
+python -m SimpleHTTPServer 80  (指定端口)
+
+#快速分享到外网
+./ngrok http local_web_port
+
+#python问题
+1. 使用yum提示”No module named yum“, 使用pip提示”ImportError: No module named pkg_resources“
+  原因：安装greenplum并将"source /home/greenplum/greenplum-db/greenplum_path.sh"行添加到了~/.bash_profile导致
+2. 使用pip提示”ImportError: No module named pkg_resources“
+  原因1: 安装python2.7导致版本不一致
+  解决：wget https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py -O - | python

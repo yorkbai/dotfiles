@@ -1,0 +1,40 @@
+# modify file ctime 
+touch -c -m -t 201110110033  test.txt
+
+# get server public ip 
+curl ipecho.net/plain; echo
+
+# curl test
+curl --insecure -X POST "https://apipool.zhugeio.com/apipool/?method=web_event_srv.upload"
+
+# 文件转码
+ISO－8859转换UTF－8
+描述：转移windows下数据库，导出后保存格式为ISO－8859，在linux下导入mysql后中文显示乱码
+解决： 
+#iconv -f GBK -t UTF-8 wp.sql -o wp_new.sql
+
+# date
+date '+%F %T'  ---> 2016-05-10 16:36:36
+date +%F
+date +%Y%m%d%H%M%S  ----> 20160510163702
+
+# 系统性能
+dstat --cpu --io --mem --net --load --fs --vm --disk-util --disk-tps --freespace --swap --top-io --top-bio-adv 3 10   
+ps: 3表示间隔， 10表示次数
+
+# 查看磁盘占用
+iotop ,  atop
+
+#linux tc限速
+
+# 限制流出带宽为1Mbps： 
+tc qdisc add dev em1 root tbf rate 1000kbit latency 50ms burst 1000kb 
+
+# 限制eth0网卡的带宽为500kbit：
+/sbin/tc qdisc add dev eth0 root tbf rate 500kbit latency 50ms burst 15kb 
+
+# 解除eth0网卡的带宽限制：
+/sbin/tc qdisc del dev eth0 root tbf 
+
+# 列出已有的策略： 
+tc -s qdisc ls dev eth0 

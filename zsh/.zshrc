@@ -33,8 +33,8 @@ alias ssh="TERM=xterm-256color ssh"
 alias ls=" ls -G"
 alias pwd=" pwd"
 alias cat=" ccat"
-# alias tmux='tmux -2'
-alias -s sh=vi
+alias elinks=" elinks"
+alias w3m=" w3m"
 alias -s ini=vi
 alias -s md=vi
 alias -s conf=vi
@@ -135,10 +135,6 @@ export PYTHONPATH=/Users/yorkbai/bin/dbgp/pythonlib
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-
-# include Z 
-# ~/bin/z.sh
-# source ~/.iterm2_shell_integration.`basename $SHELL`
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8

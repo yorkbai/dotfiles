@@ -1,0 +1,64 @@
+#alfred workflow
+path: /Users/yorkbai/Library/Application Support/Alfred 2/Alfred.alfredpreferences/workflows
+google search插件gs查询出不来的话，可以更换dt到stormss试试
+
+#1password
+要启用1password，需要在1password的偏好设置-> 高级 中选中与第三方整合项。
+
+#browerswitcher
+bs/bso/bss/bsc  (将当前tab切换到其他浏览器打开)
+
+#快捷键呼出
+double option 
+
+#切换到其他浏览器
+url + 回车  （当前浏览器中的tab调用在其他浏览器打开）
+
+#search tab in brower
+ww *
+
+#fantastical2
+fant something in sometime
+
+#pocket
+出现“your pocket list is empty!" : 在alfred输入 ： pocket wf:reset 进行重置即可。
+
+#layout
+lay
+
+#查看本机信息
+about
+
+#刷新dns
+flush
+flushdns
+
+#packal search／update
+插件可以搜索or自动更新已安装的workflow , 由于无法直接使用google，需修改以下php文件中的google.com为github.com即可：
+functions.php:117: exec( "ping -c 1 -t 1 www.google.com", $pingResponse, $pingError);
+functions.php:122:    $connection = @fsockopen("www.google.com", 80, $errno, $errstr, 1);
+and
+report-usage-data.php:169: exec( "ping -c 1 -t 1 www.google.com", $pingResponse, $pingError);
+report-usage-data.php:174:    $connection = @fsockopen("www.google.com", 80, $errno, $errstr, 1);
+
+#dns
+ >dns 114
+ >dns default
+
+#timers
+>timer 1m 'doing something'
+
+# 时间戳
+ts
+
+#dr(default results)与fs（file search）区别：
+1.如果你想用Alfred使用File Search——find或者open或者in，你就需要在Default Results里的Search Scope设置可以索引到的路径才能搜索到你想要的文件
+
+#多个文件操作
+选中待操作文件后按“Fn” 弹出更多操作选项
+如果你想多文件操作，你就可以选中第一个文件后按Option+↑或者↓，选完按Option+→同样进入上图，即可进行操作。可以拷贝，移动等等。如果选错文件，按Option+←可以去除刚才选错的文件。按Option+CMD+/进入先前的路径，/和~符号可以进入用户主目录和系统根目录
+
+#secure shell & ssh plugin
+设置iterm2为默认处理，在iterm2中选择profile， 在url schemule中选ssh，确定。 然后执行：
+  /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -kill -r -all local,system,user
+  重启launer service

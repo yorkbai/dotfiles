@@ -1,0 +1,339 @@
+# Start tmux:
+tmux
+
+# Detach from tmux:
+prefix+d
+
+# Restore tmux session:
+tmux attach
+
+# Detach an already attached session (great if you are moving devices with different screen resolutions)
+tmux attach -d 
+tmua a
+
+# Display session:
+tmux ls
+
+# Rename session:
+Ctrl-b $
+
+# Switch session:
+Ctrl-b s
+
+# Start a shared session:
+tmux -S /tmp/your_shared_session
+chmod 777 /tmp/your_shared_session
+
+# Help screen (Q to quit):
+Ctrl-b ?
+
+# Scroll in window:
+Ctrl-b PageUp/PageDown
+
+# Reload configuation file
+Ctrl-b : source-file /path/to/file
+
+# Window management
+# =================
+
+# Create window:
+Ctrl-b c
+
+# Destroy window:
+Ctrl-b x
+
+# Switch between windows:
+Ctrl-b [0-9]
+or
+Ctrl-b Arrows
+
+# Split windows horizontally:
+Ctrl-b %
+
+# Split windows vertically:
+Ctrl-b "
+
+#交换pane 位置
+prefix+{ (顺时针)or prefix+} (逆时针) 
+
+
+#默认复制模式：
+我的控制键为：C-a
+1、 C-a [ 进入复制模式
+2、 参考上表移动鼠标到要复制的区域，移动鼠标时可用vim的搜索功能"/","?"
+3、 安空格键开始选择复制区域
+4、    选择完成后安enter键退出
+5、 C-a ] 粘贴
+以上为tmux默认配置， 已修改为vi模式。
+
+
+#set copy-mode
+setw -g mode-keys vi
+bind ` copy-mode
+unbind [
+unbind p
+bind p paste-buffer
+bind -t vi-copy v begin-selection
+bind -t vi-copy y copy-selection
+＃bind -t vi-copy Escape cancel     #esc键退出copy模式，这个配置会导致tmux插件异常
+bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
+
+#历史命令
+ctrl+p  上翻命令行历史
+ctrl+n  下翻命令行历史
+
+#调整窗口大小
+prefix ctrl+m  （向右移动)
+prefix ctrl+h   （向左移动）
+
+#排错
+sessions should be nested with care, unset $TMUX to force
+
+出现这个提示时表示你正在一个tmux session里，执行了tmux命令，尝试prefix+s列出所有会话，再进行切换。如果不行，可以执行命令 tmux list-session，然后tmux kill-session -t "对应的session名称"
+
+#插件
+##tmux-yank  （复制／粘贴命令行内容）  
+     prefix+y  --> 拷贝命令行到系统粘贴板，在tmux多个pane时粘贴一行总会包含旁边pane的内容， 这时使用此插件非常好用； 在数据库内用prefix＋y也很好用。
+     prefix＋Y(shift-y)  --> 拷贝pane当前工作目录到粘贴板（ssh到远程主机好像有问题）
+
+##tmux-copycat
+Most of the behavior of tmux-copycat can be customized via tmux options.
+To set a value, just put set -g @option 'value' in your .tmux.conf before loading the tmux-copycat plugin.
+
+Other options:
+
+@copycat_search (default /) defines the key-binding used (after prefix) to start an interactive search.
+
+@copycat_next (default n) defines the key (without prefix) used to jump to next search result.
+
+@copycat_prev (default N) defines the key (without prefix) used to jump to previous search result.
+重要： 搜索到需要的string后，如果用“enter”，粘贴需要使用prefix+p , 因为这时并没有复制到系统粘贴板，因此不能跨session进行粘贴；  如果用y , 则会复制到系统粘贴板，可以跨session粘贴；
+
+
+Options for predefined searches（预定义搜索）:
+
+@copycat_git_special (default C-g) git status search
+@copycat_file_search (default C-f) file search
+@copycat_url_search (default C-u) url search
+@copycat_digit_search (default C-d) digit search
+@copycat_hash_search (default M-h) SHA-1 hash search
+@copycat_ip_search (default M-i) IP address search
+Example: to remap default file search to use C-t put set -g @copycat_file_search 'C-t' in .tmux.conf.
+ 
+##tmux-open
+  直接用系统默认程序打开在tmux copy模式下高亮选择的文件
+  o  --> 打开
+  ctrl+o  ---> 用系统默认编辑器打开
+  
+##resurrect
+##continuum
+
+##复制／粘贴(重要, 场景： 启动tmux环境)
+  `+space , 上下移动到需要复制的地方， 按“v”开始选择，选择后按“y”,这时选择的内容即在系统粘贴板中， 在任意需要的地方用cmd+v 或  prefix+p 都可粘贴。(支持ssh登录到其他服务器并用vi打开文件)
+
+##查看tmux buffers
+  ｀＋： 输入list-buffers可以查看
+  
+##关闭窗口中指定的pane
+  prefix + :kill-pane -t pane-number
+  
+##tmux复制包含多种情况，较为复杂：
+  - 基础复制／粘贴
+      `+space , 上下移动到需要复制的地方， 按“v”开始选择，选择后按“y”,这时选择的内容即在系统粘贴板中， 在任意需要的地方用cmd+v 或  prefix+p 都可粘贴。(支持ssh登录到其他服务器并用vi打开文件)
+  - 搜索模式   ---> tmux-copycat插件
+      prefix+/ ,然后输入需要搜素的字符串，回车。用n or N 向上／向下匹配，选中后y复制到系统粘贴板
+  -  prefix+y  (复制命令行内容到系统粘贴板,ssh到远程主机也支持) --> tmux-yank插件
+  -  prefix+Y  (复制当前路径到系统粘贴板，本机可以使用，但ssh到远程主机测试失败）？？？
+  
+## vim整合
+  #vi ~/.vimrc  (加入如下两行)
+     " yank text to the OS X clipboard" 将文本复制到OSX剪贴板中
+     noremap <leader>y "*y
+     noremap <leader>yy "*Y
+
+  fish中有bug，需要zsh；
+  在vim中，normal模式下，输入\yy即可将当前行复制到系统粘贴板; 输入 3\yy将当前行在内的3行复制到粘贴板。
+
+#tmux.conf配置文件
+unbind C-b
+set -g prefix `
+bind ` send-prefix
+
+bind r source-file  ~/.tmux.conf  \; display  "Config Reloaded!"
+
+###for using zsh shell
+set -g default-shell /bin/zsh
+#for using fish shell
+#set -g default-shell /usr/local/bin/fish
+
+set -g default-terminal "screen-256color"
+
+#up
+bind-key k select-pane -U
+#down
+bind-key j select-pane -D
+#left
+bind-key h select-pane -L
+#right
+bind-key l select-pane -R
+
+bind s setw synchronize-panes on  # 开启 pane 命令同步
+bind a setw synchronize-panes off # 关闭 pane 命令同步
+
+#quickly open multi pane
+bind G source-file ~/.tmux/gp
+bind W source-file ~/.tmux/web
+
+#resize pane 
+bind -r ^k resizep -U 10  # upward (prefix Ctrl+k)
+bind -r ^j resizep -D 10  # downward (prefix Ctrl+j)
+bind -r ^h resizep -L 10  # to the left (prefix Ctrl+h)
+bind -r ^l resizep -R 10  # to the right (prefix Ctrl+l)pane
+
+#split window
+unbind %
+bind | split-window -h
+unbind '"'
+bind  - split-window -v
+
+# select last window
+#bind-key C-l select-window -l
+
+#set copy-mode
+setw -g mode-keys vi
+bind space copy-mode
+unbind [
+unbind p
+unbind -t vi-copy Escape
+bind p paste-buffer
+bind -t vi-copy v begin-selection
+bind -t vi-copy y copy-selection
+#bind -t vi-copy Escape cancel  #this bindmapping will break copycat plugin 
+bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
+
+# invoke reattach-to-user-namespace every time a new window/pane opens
+set-option -g default-command "reattach-to-user-namespace -l zsh"
+#set-option -g default-command "reattach-to-user-namespace -l fish"
+
+# 状态栏
+# 颜色
+set -g status-bg '#0aa307'
+set -g status-fg white
+ 
+# 对齐方式
+set-option -g status-justify centre
+ 
+# 左下角
+set-option -g status-left-length 40
+set-option -g status-left '#[bg=black,fg=white][#[fg=white]#S#[fg=white]]'
+ 
+# 窗口列表
+#锁定窗口名称
+set-option -g allow-rename off
+
+#允许窗口名称随前端程序变化，与上一行配置互斥
+#setw -g automatic-rename on
+
+set-window-option -g window-status-format '#[fg=black,bold]#I#[fg=black]:#[fg=black]#W#[fg=dim]'
+set-window-option -g window-status-current-format '#[fg=red,bold]#I#[fg=red]:#[fg=red]#W#[fg=dim]'
+ 
+# 右下角
+set-option -g status-right-length 80
+set -g status-right '#[fg=black][#[fg=black]%A %F %H:%M#[fg=black]]'
+#set -g status-justify centre
+
+#set window nofifications
+setw -g monitor-activity on
+setw -g window-status-activity-bg red
+setw -g window-status-activity-fg yellow
+set -g visual-activity on
+
+# 窗口号和窗口分割号都以1开始（默认从0开始）
+set -g base-index 1
+setw -g pane-base-index 1
+set -g renumber-windows on
+
+set -g history-limit 30000
+
+setw  -g utf8 on
+set   -g status-utf8 on
+
+#bind , command-prompt -p "(rename-window '#W')" "rename-window '%%'"
+
+#------------------------------------------------------------------------------
+# Plugins.
+#------------------------------------------------------------------------------
+
+# https://github.com/tmux-plugins/tmux-copycat
+# I have to use Alt-s for SHA-1 searches because I use Alt-h (the default) to
+# resize the current pane.
+#set -g @copycat_hash_search "M-s"
+set -g @copycat_file_search 'C-w'
+run-shell ~/.tmux/plugins/tmux-copycat/copycat.tmux
+
+# https://github.com/tmux-plugins/tmux-open
+run-shell ~/.tmux/plugins/tmux-open/open.tmux
+
+# https://github.com/tmux-plugins/tmux-yank
+run-shell ~/.tmux/plugins/tmux-yank/yank.tmux
+
+#save tmux session of two methods
+set -g @resurrect-capture-pane-contents 'on'
+set -g @resurrect-processes 'ssh mosh-client'
+run-shell ~/.tmux/plugins/tmux-resurrect/resurrect.tmux
+#run-shell ~/.tmux/plugins/tmux-continuum/continuum.tmux
+#set -g @continuum-save-interval '60'
+
+#osx安装brew,tmux
+ $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+ $ brew install tmux
+
+#tmux批量分割窗口
+可以在~/.tmux目录下创建文件（如a, 将窗口分割为10份，注意－l参数表示绝对行数，－p表示当前pane的百分比）,然后在~/.tmux.conf中配置快捷键：
+   bind G source-file ~/.tmux/gp_10
+   
+gp_10脚本文件内容如下：
+
+select-pane -t 1
+split-window -h -p 50
+select-pane -t 1
+split-window -v -l  9
+select-pane -t 1
+split-window -v -l 9
+select-pane -t 1
+split-window -v -l  9
+select-pane -t 1
+split-window -v -l  9
+select-pane -t 6
+split-window -v -p 20
+select-pane -t 6
+split-window -v -p 25
+select-pane -t 6
+split-window -v -p 34
+select-pane -t 6
+split-window -v -p 50
+send-keys -t 1  'ssh aws150' C-m
+send-keys -t 6  'ssh aws151' C-m
+send-keys -t 2  'ssh aws152' C-m
+send-keys -t 7  'ssh aws153' C-m
+send-keys -t 3  'ssh aws140' C-m
+send-keys -t 8  'ssh aws141' C-m
+send-keys -t 4  'ssh aws142' C-m
+send-keys -t 9  'ssh aws143' C-m
+send-keys -t 5  'ssh aws144' C-m
+send-keys -t 10 'ssh aws145' C-m
+#注释： The C-m at the end is interpreted by Tmux as the enter key.
+select-pane -t 1
+
+#命名session
+tmux new -s name
+
+#kill pane
+prefix : kill-pane -t pane-number
+
+#tmux快捷键映射
+tmux list-keys -t vi-copy
+
+# tmux plugins
+ctrl-I  install plugin
+ctrl-U  update plugin

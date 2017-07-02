@@ -1,0 +1,74 @@
+# check zsh speed
+/usr/bin/time /bin/zsh -i -c exit
+zsh -xv
+
+# zsh shell
+!$  $_   最后一个参数
+ctrl-a   begin of command line
+ctrl-e   end of command line
+ctrl-r   search history using fzf
+ctrl-t   search file using fzf
+PS: ctrl-n/p   up/down move to choice, very important
+
+# batch renaming
+autoload -U zmv
+mv '(*).txt'  '$1.html'
+   
+# trans uppercase
+zmv '(*)' '${(U)1}' ---> 转为大写
+zmv '(*)' '${(L)1}' -->转为小写
+echo 'autoload -U zmv' >> ~/.zshrc
+  
+# 多行文本合并为一行
+方法1: # xargs < 1.txt > 2.txt            #将1.txt中多行合并为1行输入2.txt
+方法2:  在1.txt 中用q录制宏执行
+方法3:  tr -s "\n" " " < test.txt;echo
+方法4: 在vim中
+- 3J  把含当前行在内的三行合并为一行， 空格隔开
+- 3gJ  把含当前行在内的三行合并为一行， 中间无空格隔开
+
+# for_loop
+for num in {1..5}
+for num in 1 2 3 4 5
+do
+     print $num
+done
+
+#bindkey键盘映射
+vi ~/.zshrc
+    bindkey "^R" history-incremental-search-backward
+    bindkey "^B" push-line
+    bindkey "^X^E"  editor command-line
+
+Zsh下通过bindkey命令来查看和更改快捷键设置。
+
+%bindkey -l
+列出目前可用keymap。默认情况下有emacs, viins, vicmd 和 main 四个keymaps.
+viins是VI的insert mode，vicmd是VI的command mode。 main是一个pointer，指向目前正在被使用的keymap.
+
+%bindkey -N newmap viins
+以viins为基础，创建一个新的keymap。创建出来的newmap是viins的一个copy。类似的，你可以基于emacs创建自己的keymap。
+
+%bindkey -M newmap '^K' push-line
+指定<Ctrl-K>为push-line功能的快捷键。这一设定是针对newmap这个keymap的。
+
+%bindkey -A newmap main
+让main指向newmap。 其实就是alias.
+
+#递归查询
+使用\*\*作为下级目录的通配符，$ls \*\*/*.sh
+
+#目录跳转
+- 使用z插件   $z + 目录中包含的字符
+- d (enter)显示按MRU对应的1-9个最近目录，直接输入相应的数字后回车即可  $d then $3
+- autojump   (与z 类似，属于oh-my-zsh的plugin，用其中一个即可)
+- wd  （类似push／pop堆栈） $cd dir $wd add alias $wd alias进入alias对应的目录。 $wd list 可查看
+
+# zsh编辑命令行 
+     在~/.zshrc中添加：
+        #edit command in vi ctrl-x ctrl-e
+        autoload edit-command-line
+        zle -N edit-command-line
+        bindkey '^X^e' edit-command-line
+  即可在zsh vimode中ctrl+x ,ctrl+e对命令行进行编辑。
+  ps: 也可用“esc+v"实现。

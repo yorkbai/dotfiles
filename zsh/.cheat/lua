@@ -1,0 +1,2 @@
+# string split
+local one, two = ngx.re.match(myIP,"([^,]+),([^,]+)","o");

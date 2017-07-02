@@ -5,7 +5,7 @@
 let mapleader="\<Space>"
 
 " 支持鼠标
-set mouse=a
+set mouse-=a
 
 " --------------------
 " 查找与替换升级用法
@@ -70,29 +70,39 @@ set showmatch
 set nobackup
 set nowritebackup
 set noswapfile
+
 " 快速选择粘贴的文本
 noremap gV `[v`]
+
 " check whitespace and display it
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
 " 保存文件
 nnoremap <Leader>w :w!<CR>
+
 " modify file without change to root
 command W w !sudo tee % > /dev/null
+
 " yapf format python file
 autocmd FileType python nnoremap <Leader>= :0,$!yapf<CR>
+
 " 打开／关闭目录树
 map  <F11> :NERDTreeToggle<CR>
 map! <F11> <Esc>:NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary") | q | endif
+
 "将tab替换为空格
 nmap tt :%s/\t/    /g<CR>
+
 " 宏测试
 let @m = "Y6GpF1C7 112joNew text.ZZ"
 " for python docstring ", 特别有用
 au FileType python let b:delimitMate_nesting_quotes = ['"']
+
 "搜索高亮
 set hlsearch
+
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
@@ -100,6 +110,7 @@ if has("win16") || has("win32")
 else
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
+
 " Delete trailing white space on save, useful for some filetypes ;)
 fun! CleanExtraSpaces()
     let save_cursor = getpos(".")
@@ -143,9 +154,15 @@ Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 Plug 'vim-scripts/vimim'
 Plug 'junegunn/vim-easy-align'
 Plug 'terryma/vim-expand-region'
+Plug 'kana/vim-textobj-user' | Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-entire'
 Plug 'https://github.com/terryma/vim-multiple-cursors.git'
 Plug 'easymotion/vim-easymotion'
 Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'sjl/gundo.vim'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
@@ -153,6 +170,9 @@ Plug 'junegunn/seoul256.vim'
 Plug 'davidhalter/jedi-vim'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
+Plug 'tomasr/molokai'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'altercation/vim-colors-solarized'
 
 Plug 'https://github.com/tpope/vim-obsession'
 Plug 'https://github.com/skywind3000/asyncrun.vim'
@@ -162,8 +182,6 @@ Plug 'suan/vim-instant-markdown'
 Plug 'w0rp/ale'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'axiaoxin/vim-json-line-format'   " <Leader>wj   格式化为json格式
-Plug 'vim-scripts/molokai'
-Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
@@ -336,12 +354,12 @@ map <F4> <leader>c<space>
 " --------------------
 " Ack
 " --------------------
-map <F3> :Ack -i 
+map <F3> :Ack! -i 
 
 " --------------------
 " ctrlp
 " --------------------
-let g:ctrlp_map = '<c-f>'
+" let g:ctrlp_map = '<c-f>'
 let g:ctrlp_show_hidden = 0
 " 设置过滤不进行查找的后缀名 
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|pyc)$'
@@ -448,7 +466,7 @@ map <leader>9 :b 9<CR>
 " --------------------------
 "  terryma/vim-expand-region
 " --------------------------
-vmap v     <Plug>(expand_region_expand)
+vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 " 退出vim后，内容显示在终端屏幕, 可以用于查看和复制, 如果不需要可以关掉
@@ -504,28 +522,41 @@ endfun
 autocmd BufNewFile * normal G
 
 " -----------------------
-" 主题
+" for solarized theme
 " -----------------------
-" set termguicolors
 " let g:solarized_termtrans = 1
 " colorscheme solarized
+" highlight Comment cterm=italic
+" hi Visual cterm=NONE ctermbg=White ctermfg=Black
 " call togglebg#map("<F6>")
-colorscheme molokai
-let g:molokai_original = 1
-let g:rehash256 = 1
-set background=dark
+
+" -----------------------
+" for molokai theme
+" -----------------------
+" colorscheme molokai
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+" set background=dark
+" highlight Comment cterm=italic
+" hi Visual cterm=NONE ctermbg=White ctermfg=Black
+
+" -----------------------
+" for tomorrow theme
+" -----------------------
+colorscheme Tomorrow-Night-Eighties
 highlight Comment cterm=italic
 hi Visual cterm=NONE ctermbg=White ctermfg=Black
+
 " -----------------------
-"  for space-vim-dark
+"  for space-vim-dark theme
 " -----------------------
-" set t_Co=256
 " colorscheme space-vim-dark
 " let &t_ZH="\e[3m"
 " let &t_ZR="\e[23m"
 " let g:space_vim_dark_background = 234
 " color space-vim-dark
 " highlight Comment cterm=italic
+" hi Visual cterm=NONE ctermbg=White ctermfg=Black
 " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
@@ -574,6 +605,11 @@ if exists('$ITERM_PROFILE')
          let &t_EI = "\<Esc>]50;CursorShape=0\x7"
     endif
 end
+
+" --------------------
+" gundo
+" --------------------
+nnoremap <F6> :GundoToggle<CR>
 
 " --------------------
 " quickfix 
@@ -626,3 +662,12 @@ function! s:compile_and_run()
        exec "AsyncRun! time python %"
     endif
 endfunction
+
+
+" background color fix
+if &term =~ '256color'
+" disable Background Color Erase (BCE) so that color schemes
+" render properly when inside 256-color tmux and GNU screen.
+" see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+set t_ut=
+endif

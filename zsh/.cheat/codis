@@ -1,0 +1,147 @@
+
+# *基本说明*
+- Codis Servergroup
+- Codis Proxy
+- Codis Server
+- Slot
+
+> 一个Proxy可以对应多个ServerGroup；
+
+> ServerGroup 是一组 Codis Server，一个ServerGroup只有一个Master(Codis Server)，而且虽然有多个Codis Server，Proxy只访问ServerGroup中的 Master，Slave 可用作故障切换；
+
+> Slot是一个逻辑概念，一共1024 个，使用crc32(key)%1024 计算Slot id，而且一个(或多个) Slot 属于一个ServerGroup，1024个Slot一起分用多个ServerGroup 资源；
+
+> Slot所在ServerGroup内存不够的时候可以把此Slot迁移到另一个内存使用少的 ServerGroup，实现扩容的目的，而当所有ServerGroup内存不够的时候增加新的 ServerGroup 即可。
+
+
+
+# *Codis2.0与3.0比较*
+
+## *架构比较*
+  ![2016-09-08 at 14.17.png](quiver-image-url/80613F56E5237BCB4B7BBF4E1B862CDB.png)
+  
+  ![2016-09-08 at 14.48.png](quiver-image-url/554BA5957E67025690BFF208602D5CC1.png)
+  
+## *组件比较*
+  - 2.0
+    * Codis Proxy (codis-proxy)
+    * Codis Manager (codis-config)
+    * Codis Redis (codis-server)
+    * ZooKeeper
+  
+  Codis依赖ZooKeeper来存放数据路由表和codis-proxy节点的元信息, codis-config 发起的命令都会通过ZooKeeper同步到各个存活的codis-proxy。总之一句话就是非常依赖zookeeper！
+
+  - 3.0
+    * Codis dashboard
+    * Codis proxy
+    * Codis server
+    * Codis-fe
+    * Codis-HA   (Codis HA 工具仅仅是 Codis 集群 HA 的一部分，单独工作能力有限)
+    * Codis-admin
+    * Zookeepe/Etcd
+
+
+## *Dashboard比较*
+  - [2.x](http://103.17.40.167:18087/admin/)
+  - [3.x](http://54.222.213.86:8080/#codis-test) 
+
+
+## *Zookeeper比较*  
+  ![2016-09-08 at 14.07.png](quiver-image-url/75EB1310925D9F1C32EDDCDAD8F3B84D.png)
+  
+  ![2016-09-09 at 10.49.png](quiver-image-url/B230FDF891CFB1DBD3A6939BB07D1D39.png)
+  
+## 2.x和3.x的区别有多大？
+  [看看项目开发者的官方标准答复](https://github.com/CodisLabs/codis/issues/628)
+
+# Codis安装与使用(3.x)
+  - Install go, java
+
+$ cd /usr/local/src
+$ mkdir -p /usr/local/java
+$ mkdir -p /root/go/src
+$ tar zxvf jdk1.8.0_65.tar.gz -C /usr/local/java
+$ tar zxvf go1.7.tar.gz -C /usr/local
+$ vi /etc/profile
+    JAVA_HOME=/data/localization/java/jdk1.8.0_65
+    export JAVA_HOME
+    PATH=$PATH:${JAVA_HOME}/bin
+    
+    export GOROOT=/usr/local/go
+    export GOPATH=/root/go
+    export PATH=$GOROOT/bin:$GOPATH/bin:$PATH
+    export PATH
+$ source /etc/profile
+$ go version
+
+ - Install godep
+
+ $ go get -u github.com/tools/godep && which godep
+
+ - install codis
+
+$ go get -u -d github.com/CodisLabs/codis
+$ cd  $GOPATH/src/github.com/CodisLabs/codis
+$ make
+$ ls bin/
+    drwxr-xr-x 4 codis codis     4096 Jan  4 14:55 assets
+    -rwxr-xr-x 1 codis codis 17600752 Jan  4 14:55 codis-admin
+    -rwxr-xr-x 1 codis codis 18416320 Jan  4 14:55 codis-dashboard
+    -rwxr-xr-x 1 codis codis  9498040 Jan  4 14:55 codis-fe
+    -rwxr-xr-x 1 codis codis  9956328 Jan  4 14:55 codis-ha
+    -rwxr-xr-x 1 codis codis 11057280 Jan  4 14:55 codis-proxy
+    -rwxr-xr-x 1 codis codis  4234432 Jan  4 14:55 codis-server
+    -rw-r--r-- 1 codis codis      148 Jan  4 14:55 version
+
+ - Start codis(按顺序启动) 
+
+dashboard:    
+$ nohup ./bin/codis-dashboard --ncpu=4 --config=dashboard.toml  --log=dashboard.log --log-level=WARN &
+proxy:            
+$ nohup ./bin/codis-proxy --ncpu=4 --config=proxy.toml  --log=proxy.log --log-level=WARN &
+codis-server: 
+$ ./bin/codis-server /etc/redis/codis_6379.conf
+$ ./bin/codis-server /etc/redis/codis_6380.conf 
+fe:
+$ nohup ./bin/codis-fe --ncpu=4 --log=fe.log --log-level=WARN  --dashboard-list=codis.json --listen=0.0.0.0:8080 &
+codis-ha:
+$ nohup ./bin/codis-ha --log=ha.log --log-level=WARN --dashboard=127.0.0.1:18080 &
+
+- Dashboard管理
+  http://54.222.213.86:8080/#codis-test
+
+# Codis-HA
+
+  - 由2.x的独立项目合并到3.x版本
+  - 当一个group的master挂掉的时候，codis不会自动的将某个slave升级成master，codis-ha实现codis-server的主从切换，codis-server主库挂了会提升一个从库为主库，从库挂了会设置这个从库从集群下线。
+
+# Codis-admin
+
+> 注意：使用 codis-admin 是十分危险的。
+> 注意：停止进程可以使用kill, 因为组件在退出时会自动清理部分注册信息;如果使用kill -9终止进程，可能导致进程无法启动;
+> 注意：用codis-admin修复proxy和dashboard异常的前提是proxy或dashboard进程务必完全退出！！！
+
+## 主要用途
+  * codis-proxy 异常退出的修复
+  * codis-dashboard 异常退出的修复
+
+ codis-proxy修复
+ $ ./bin/codis-admin --dashboard=127.0.0.1:18080 --remove-proxy -t "proxy_token"  --force
+
+ codis-dashboard修复
+ $ $ ./bin/codis-admin --remove-lock --product=codis-test --zookeeper=127.0.0.1:2181
+
+# *关于命令支持*
+
+  [不支持的命令列表](https://github.com/CodisLabs/codis/blob/release3.0/doc/unsupported_cmds.md)
+
+# *几点讨论*
+
+- codis最佳场景：海量key , 小value(< 1M), 是否适合zhuge2.0？
+- codis不能实现读写分离的影响?
+- codis不支持命令的影响?
+- codis不支持select的影响？
+- slots在生产环境是否分组？分组原则？
+
+
+

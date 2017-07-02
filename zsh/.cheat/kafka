@@ -1,0 +1,18 @@
+# 列出topic：
+/data/localization/kafka/bin/kafka-topics.sh --list --zookeeper 127.0.0.1:2181
+
+# 查看topic里全部数据：
+/data/localization/kafka/bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic sdklua_online  --from-beginning
+
+# 查看topic偏移量：
+/data/localization/kafka/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zookeeper localhost:2181 --topic sdklua_online  --group etl-gate
+
+/data/localization/kafka/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zookeeper localhost:2181 --topic pay_statisv2  --group etl-id
+
+/data/localization/kafka/bin/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker --zookeeper localhost:2181 --topic pay_zg_total_random --group etl-dw
+
+# 查看topic分区／复本信息：
+/data/localization/kafka/bin/kafka-topics.sh --describe --zookeeper localhost:2181 —topic sdklua_online
+
+# 创建topic
+/data/localization/kafka/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic sdklua_online

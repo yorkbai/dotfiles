@@ -1,0 +1,210 @@
+# quick
+g;  --> Go to last edited location 
+q:  --> 打开命令窗口，可以查看/选择／修改vim中已执行过的命令, hjlk移动,与multiple_cursonr 插件冲突。只能使用ctrl-c选择中,不能直接回车执行
+
+# 翻转行序
+:g/^/m 0
+:g/foo/d
+:v/foo/d
+
+# 定位
+g;   跳到最后编辑的位置
+'.   跳到最后编辑的行
+
+# 寄存器
+vim提供10类48个寄存器
+a-zA-Z  命名寄存器
+0-9  编号寄存器，保存最近9次删除的寄存器
+.%:  只读寄存器
+-    小删除寄存器(不到一行)
+_    黑洞寄存器
+\#   buffer交替文件寄存器
+"    匿名存贮器
+=    表达式寄存器
+/    搜索模式寄存器
+*/+    系统剪贴板
+
+# sub-replace-\= 用法
+# 函数式
+:s/替换字符串/\=函数式
+ps1: 在函数式中可以使用 submatch(1)、submatch(2) 等来引用 \1、\2 等的内容，而submatch(0)可以引用匹配的整个内容。
+ps2: \v （即 very magic 之意）：任何元字符都不用加反斜杠\V （即 very nomagic 之意）：任何元字符都必须加反斜杠
+
+:%s/\v(131\d+)/\=strftime("%Y-%m-%d %H:%I:%S",submatch(1)).", "/g    --> osx下测试通过
+
+简要解释下这个正则表达式。:表示进入Vim的命令模式，%s表示进行全局替换，(131\d+),表示匹配以逗号结尾的时间戳，\=strftime()表示将先执行函数strftime()，将返回的结果进行替换，submatch(1)表示将匹配的时间戳当作strftime()的参数，.”,”表示将strftime()的结果与”,”组合起来(.号表示连接两个字符串)。这个正则表达式应用在文首的例文，进行展开后的结果如下：
+:%s/1319265479,/\=stftime("%Y-%m-%d %H:%I:%S", 1319265479).","/g
+等同于:
+:%s/1319265479,/2011-10-22 14:37:59,/g
+
+# 把开头的＃替换成数字顺次增加（从1开始）
+:%s/#/\=line(".")/g
+
+# vim buffer
+<leader>buffer_number   切换buffer
+:ls   查看buffer
+:bd buffer_name    关闭buffer
+
+# 转换tab为空格，依次执行如下在vim命令模式：
+:set noexpandtab
+:retab!
+:set expandtab
+:retab!
+
+# nerdtree   文件目录树
+F11  打开nerdtree
+q    关闭目录树
+?: 快速帮助文档
+o: 打开一个目录或者打开文件，创建的是buffer，也可以用来打开书签
+go: 打开一个文件，但是光标仍然留在NERDTree，创建的是buffer
+t: 打开一个文件，创建的是Tab，对书签同样生效
+T: 打开一个文件，但是光标仍然留在NERDTree，创建的是Tab，对书签同样生效
+i: 水平分割创建文件的窗口，创建的是buffer
+gi: 水平分割创建文件的窗口，但是光标仍然留在NERDTree
+s: 垂直分割创建文件的窗口，创建的是buffer
+gs: 和gi，go类似
+x: 收起当前打开的目录
+X: 收起所有打开的目录
+e: 以文件管理的方式打开选中的目录
+D: 删除书签
+P: 大写，跳转到当前根路径
+p: 小写，跳转到光标所在的上一级路径
+K: 跳转到第一个子路径
+J: 跳转到最后一个子路径
+<C-j>和<C-k>: 在同级目录和文件间移动，忽略子目录和子文件
+C: 将根路径设置为光标所在的目录
+u: 设置上级目录为根路径
+U: 设置上级目录为跟路径，但是维持原来目录打开的状态
+r: 刷新光标所在的目录
+R: 刷新当前根路径
+I: 显示或者不显示隐藏文件
+f: 打开和关闭文件过滤器
+q: 关闭NERDTree
+A: 全屏显示NERDTree，或者关闭全屏
+m,a  文件就拼全名，目录就以/结尾,可以创建新目录和文件
+m,d  删除文件或目录
+r    刷新目录树
+go   打开文件在buffer中，光标保留在nerdtree
+
+# Xuyuanp/nerdtree-git-plugin 在nerdtree中显示git状态
+
+# vim-fugitive 让用户能在vim中直接使用命令，对版本进行管理
+
+# ctrlp (fzf替换之)
+在vim中ctrl+p 呼出, 也可用<leader>o 呼出
+在ctrlp下<c + d>切换路径和文件查找
+在ctrlp下<c + f>在mru,mru buf和list之间切换
+<c + j,k>在列表上移动
+<c + z>可以标记选定多个文件，用<c + o>打开
+<c + w + o>只显示当前窗口
+<c + v,x>分别为横向或纵向打开窗口，和现有窗口并存
+<c + n,p>历史记录
+<c + y>可以创建目录和文件
+<c + r>切换到正则表达式匹配
+还有一点值得留意的是ctrlp支持tab补全！！
+
+# skywind3000/asyncrun.vim 在 Vim 里面异步运行各种 Shell 指令并且把结果实时输出到 Quickfix(需先用:copen打开quickfix窗口)
+:AsyncRun {command}
+
+
+# iterm2/zsh/tmux/vim env add italic support
+https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux
+$ infocmp xterm-256color-italic > xterm-256color-italic.terminfo
+$ tic -x tmux.terminfo
+$ echo $TERM
+$ echo `tput sitm`italics`tput ritm`
+$ infocmp xterm-256color  
+$ infocmp tmux-256color
+$ tput colors 
+
+
+#vim用seq命令生成顺序数字：
+:r !seq  20151201  20151231
+- 在osx中vim中执行上述命令会变成科学计数，在centos，ubuntu中都是正常的数字 , 在osx中可以先生成1201，。。。。，再使用replace补全：
+      :%s/^/2015/g
+      :r  !seq 1 100    (将!后命令执行的结果插入到vim中当前光标处)
+
+#VIM正在编辑，需要转换到shell下，不想退出vim
+  在vim中执行 ：shell 即可切换到shell下，shell执行结束后用exit退出shell即可回到vim中
+
+#vim快速删除
+ di  dt
+#在你忘记用 root 方式打开文件时的文件保存
+ :w !sudo tee %
+#把光标下的文字置于屏幕中央(在可视模式中使用命令（译者注：在普通模式中也可以）)
+ zz
+#把当前文件转化为网页
+:%TOhtml
+（译者注：原文是 :%Tohtml，但在我的电脑上是 :%TOhtml）,需本地验证！
+
+#基本计算器
+在插入模式下，你可以使用 Ctrl+r 键然后输入 =，再输入一个简单的算式。按 Enter 键，计算结果就会插入到文件中。例如，尝试输入：
+
+Ctrl+r '=2+2' ENTER
+
+#vim复制到系统clipboard
+eg: ctrl-v进入虚拟块，hjkl移动选中，“+y即可复制到系统粘贴板
+
+##vim有用的命令
+- :x 与:wq区别-> 在文件有修改的前提下，没有区别；但若文件未修改， 用前者则文件的修改时间不会改变，后者会改变为当前时间
+- 修改无权限文件-> 不用退出，执行:w !sudo tee %  , 然后:q退出即可
+
+[DBGPavim插件](https://read01.com/GA7M5.html)
+  windows1:  >vi check.py , 然后F5进入侦错模式， F10指定断点
+  然后：
+  windows2:  > pydbgp -d 127.0.0.1:9000 check.py
+
+
+#更换国内源
+
+$gem sources -a http://ruby.taobao.org/
+$gem source -l
+$gem install vimgolf    (安装vimvolf客户端)
+
+#centos7 install vimgolf
+
+$ gem install vimgolf
+$ gem source -l
+$ gem source --remove https://rubygems.org/
+$ gem sources -a https://ruby.taobao.org/
+$ gem install vimgolf
+$ vimgolf setup
+$ vimgolf put 55b18bbea9c2c30d04000001
+
+#centos6 install ruby2.0
+
+$ yum -y install centos-release-scl-rh centos-release-scl
+$ sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
+$ sed -i -e "s/\]$/\]\npriority=10/g" /etc/yum.repos.d/CentOS-SCLo-scl.repo 
+$ yum --enablerepo=centos-sclo-rh -y install ruby200
+$ ruby -v
+$ which ruby
+
+If you'd like to enable Ruby 2.0 automatically at login time, configure like follows
+$ vi /etc/profile.d/ruby200.sh
+# create new
+ #!/bin/bash
+
+source /opt/rh/ruby200/enable
+export X_SCLS="`scl enable ruby200 'echo $X_SCLS'`"
+
+Problem1: centos6.7 install ruby200, but can't find vimgolf command.
+slove:  add "/opt/rh/ruby200/root/usr/local/bin" to $PATH
+
+#osx10.11.2 install vimgolf
+
+$gem install vimgolf   (Permission denied - /Library/Ruby/Gems/2.0.0/gems/thor-0.19.1/.document
+ ERROR:  While executing gem ... (Errno::EACCES))
+ 因为gem需要安装到/usr/bin/下，但osx10.11系统由于SIP不允许安装到此目录；
+ $ gem list --local
+ $ sudo gem install thor -n /usr/local/bin/
+ $ sudo gem install json_pure -n /usr/local/bin/
+ ......
+ gem缺少的模块都用以上办法安装到/usr/local/bin目录下去
+ $ sudo gem install vimgolf -n /usr/local/bin/
+ 
+ my_key: 32f3b9f481bd8fcfb46bbb126ade70df
+
+# vim plugin for brower
+chrome:   vimium
+firefox:  Vimperator

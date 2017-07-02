@@ -1,0 +1,64 @@
+# To find files by case-insensitive extension (ex: .jpg, .JPG, .jpG):
+find . -iname "*.jpg"
+
+# To find directories:
+find . -type d
+
+# To find files:
+find . -type f
+
+# To find files by octal permission:
+find . -type f -perm 777
+
+# To find files with setuid bit set:
+find . -xdev \( -perm -4000 \) -type f -print0 | xargs -0 ls -l
+
+# To find files with extension '.txt' and remove them:
+find ./path/ -name '*.txt' -exec rm '{}' \;
+
+# To find files with extension '.txt' and look for a string into them:
+find ./path/ -name '*.txt' | xargs grep 'string'
+
+# To find files with size bigger than 5 Mb and sort them by size:
+find . -size +5M -type f -print0 | xargs -0 ls -Ssh | sort -z
+
+# To find files bigger thank 2 MB and list them:
+find . -type f -size +20000k -exec ls -lh {} \; | awk '{ print $9 ": " $5 }'
+
+# To find files modified more than 7 days ago and list file information
+find . -type f -mtime +7d -ls
+
+# To find symlinks owned by a user and list file information
+find . -type l --user=username -ls
+
+# To search for and delete empty directories
+find . -type d -empty -exec rmdir {} \;
+
+# To search for directories named build at a max depth of 2 directories
+find . -maxdepth 2 -name build -type d
+
+# To search all files who are not in .git directory
+find . ! -iwholename '*.git*' -type f
+
+# To find all files that have the same node (hard link) as MY_FILE_HERE
+find . -type f -samefile MY_FILE_HERE 2>/dev/null
+
+# To find all files in the current directory and modify their permissions
+find . -type f -exec chmod 644 {} \;
+
+# search today file, exclude hidden 
+find . -mtime -1  (一天之内,最近24小时)
+find . -mtime 1  (前一天）
+find . -maxdepth 1 -mtime -1  -type f \( ! -regex ".*/\..*" \)      #查找今天的文件，不包含隐藏文件
+
+# xargs
+- find . -name *.pdf | xargs -i cp {} ../docbook_pdf/ 
+- 含义解释：
+   find . -name *.pdf ：递归式的找出当前文件夹及其子文件下的所有.pdf文件
+   xargs -i xxx ：其中xxx==cp {} ../docbook_pdf/，表示将输入的内容，用{}替换
+   cp {} ../docbook_pdf/ ：对于每一个find出来的文件，拷贝到对应的目标文件夹中。
+- xargs在linux和osx下不同
+ --linux:   find . -name '*.conf' | xargs -i cp {} {}.bak
+ --osx:     find . -name '*.conf' | xargs -I {} cp {} {}.bak     (osx下xargs没有-i参数，需注意)
+ --osx:     find . -maxdepth 1 -mtime -1  -type f \( ! -regex ".*/\..*" \) | xargs  -I {}  mv {}  resume/0628/
+

@@ -1,0 +1,36 @@
+
+#looper
+  for i in (seq 162 163)
+    ping -c 1 103.17.40.$i 
+  end
+  
+  for i in (seq -w 162 1 179)
+    ping -c 1 103.17.40.$i | grep 64
+  end
+
+#递归查询
+  ls **.sh  (fish)
+  ls **/*.sh  (zsh)
+
+#命令行循环（只能在fish shell下执行）
+for i in 166 172 173 175
+  echo $i
+  ssh -l root $i "cat /opt/rsync_to_aws/rsync_to_aws.log"
+end
+在bash下： echo `seq 1 4`  
+在fish下:  echo (seq 1 4)
+
+# z plugin
+
+$vi ~/.config/fish/config.fish
+  add line:   . /path/to/z.fish
+$ z -l ***
+$ z ***
+
+# fish install package or theme
+
+$ omf theme
+$omf install new_theme
+
+# 历史命令
+假设你的命令历史记录里有这么一条命令：find . -name '*.py'，要查找这条命令，首先输入 find，fish 会自动提示以 find 起始的最近一条命令，如果这条命令不是你想要的，那么你可以使用 ↑ 或者 ctrl-p 来向上搜索，搜索时会以当前命令行中的字符作为关键词，这样你就能向上查找所有包含 find 字符的历史命令了。

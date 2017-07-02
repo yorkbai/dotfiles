@@ -1,0 +1,165 @@
+# 转换rtf文件为可读的普通文本文件
+textutils -convert txt  a.rtf  
+textutil -convert  txt  iTerm2\ App\ Note.rtf 
+
+# curl获取服务器外网ip
+curl http://whatismyip.akamai.com
+curl ipecho.net/plain; echo
+
+# ssh登录连接到远程服务器的tmux
+ssh ali -t "tmux --CC"
+
+# sort按第三列排序
+sort -k3  1.txt    
+
+# aws抽取aws实例ip地址
+aws ec2 describe-instances —filters Name=tag:Name,Values=“his*” | grep “PublicIpAddress\|PrivateIpAddress\|[ms]dw” |sed ’s/^[ \t]*//g  | sort | uniq -u
+
+# zsh 快捷键设置
+bindkey -l
+
+# zsh支持匿名函数
+eg:
+$ () { cp $1/old.txt $1/new.txt } 20140508
+
+# zsh历史命令排行
+$ zsh_stats
+
+# zsh命令
+存在重定向命令的情况下，!$输出的重定向命令后的最后一个参数，而$_则输出的是重定向之前的命令的最后一个参数
+eg:    echo hello world | awk '{print $1}' ; echo !$; echo $_
+!* 上一条命令的所有参数
+!? 上一条命令的最后一个参数 （也可以用 esc+. 如果用esc+. 会自动tab补全，看资料说，alt+.也可以，但是我用secureCRT不行，应该是这个软件不支持）
+!! 重复执行上一条命令，这个知道的人比较多些
+!-: 上一条命令除了最后一个参数以外的部分，注意，冒号是要有的，并且，securtCRT也不支持
+
+# 使用stow 管理配置文件 ,用于管理dotfiles软链接工具
+$cd 
+$stow --ignore ".DS_Store" --dir=/Users/yorkbai/workspace/useful_code/git/dotfiles  --target=/Users/yorkbai  vim   （建立stow关联） 
+$stow --ignore ".DS_Store"  --dir=/Users/yorkbai/workspace/useful_code/git/dotfiles  --target=/Users/yorkbai -D zsh  (删除stow关联) 
+
+# osx下安装hub
+brew install hub
+
+# osx更新locate数据库
+sudo updatedb  
+
+# 查看信息
+sw_vers
+system_profiler
+
+# 获取wifi信息
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport  -I 
+# 关闭／打开wifi
+networksetup -setairportpower 'en0' on
+networksetup -setairportpower 'en0' off
+
+
+# osx文本转换
+brew install pandoc
+eg(default is tranfer md to html):
+pandoc -f markdown -t html  -o ~/downloads/1.html  诸葛2.0_SQL.md
+pandoc test1.md  -s -o test1.docx
+pandoc test1.md  -s -o test1.tex
+
+
+brew install httpie
+
+brew install cheat
+eg:  cheat -e **
+
+# osx install ack(比grep更快)
+brew install the_silver_searcher
+eg:  ack 'python' 
+
+# brew update
+ALL_PROXY=socks5://127.0.0.1:1086 brew update
+ALL_PROXY=socks5://127.0.0.1:1086 brew upgrade
+
+
+#  wd plugin for oh-my-zsh 
+wd add $name  (把当前目录添加到wd , 名称为$name)
+wd $name   (在任意目录下使用wd 可快速跳转到$name 定义的目录下)
+
+# jq用法
+
+
+# aws用法
+grep -n "zhuge_t_" aws_es.log | awk -F'[\\[\\]]' '{ print $10}' | sort |uniq -c
+总之一句话,通配符(出现在argument位置)由shell负责解释(与现有的文件名匹配),与具体的命令(ls,rm,mkdir)无关.正则表达式(出现在option位置上)由具体的应用程序解释(grep,sed,awk),与shell无关。”  # mkdir -p /data/test{1..9}
+
+# vim批量修改文件
+:args *.conf
+:argdo %s/a/b/gc | upadte
+
+# 按inode处理文件，常用于特殊文件名
+ls -bi ; find . -inum **  exec rm -i {} \;     
+
+# 调试查找zsh启动慢的原因 
+/usr/bin/time /bin/zsh -i -c exit
+zsh -xv   
+
+# fzf
+fzf             跟shell还有几个快捷键集成:
+C-r             列出历史命令(history)
+C-t             列出当前目录（含所有子目录）内的文件，挑选后放入命令行（比如可以输入vi后直接按C-t)
+M-c             列出当前目录内所有目录名，挑选后进入该子目录
+ctrl-n          向下移动
+ctrl-p          向上移动
+vi **<tab>      调出当前目录下所有文件选择
+ssh **<tab>     列出config里全部主机
+
+# 文件编码
+enca -L zh_CN *.txt           (检查编码)
+enca -L GB2312 -x utf-8 *.txt  (转换)
+
+# tmssh
+tmssh srv1 srv2 srv3 …..  (pretty tool,一次用tmux打开多个pane,同时进入sync输入模式)
+
+# 切换tmux版本
+brew list --versions | grep tmux
+brew switch 2.3_3
+
+
+# alfred不能搜索文件及程序解决办法
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist
+
+# 确认ssl支持哪些协议，tls1.0 1.1 1.2 …
+nscurl --ats-diagnostics --verbose  http://a.com   
+
+# Git 
+ssh -vT git@github.com    
+ssh -vT git@gl.zhugeio.com  
+注意在~/.ssh/config文件中的写法格式(ubutu需要在host字段后直接跟ip， 不使用hostname字段)
+
+# vim
+<leader>y       vim中virtual mode下复制到系统粘贴板
+ctrl-x ctrl-e   编辑命令行  （或： esc进入normal模式， 按v键即可）
+space+cc      注释   space+cu  取消注释
+spac+a =      按等号对齐
+cs[{          替换[引号为{引号 
+ds{           删除{引号
+<leader>wj    按json格式输出
+
+# chrome使用adblock （youku）
+cd ~/Library/Application\ Support/Google/Chrome/Default/Pepper\ Data/Shockwave\ Flash/WritableRoot/\#SharedObjects/
+rm -rf static.youku.com
+touch static.youku.com
+
+# tmux plugin manager(tpm)
+prefix+I      安装新插件    
+prefix+alt+u  删除插件    
+prefix+U      更新插件
+
+# Docker   
+Centos7 docker加速方式(使用aliyun在aws上加速) 这里是docker 1.12
+sudo cp -n /lib/systemd/system/docker.service /etc/systemd/system/docker.service
+sudo sed -i "s|ExecStart=/usr/bin/dockerd|ExecStart=/usr/bin/dockerd --registry-mirror=https://4t1i3u2a.mirror.aliyuncs.com|g" /etc/systemd/system/docker.service
+sudo systemctl daemon-reload
+sudo service docker restart
+
+# 网络
+netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
+
+# zshrc_tmux  256 support
+使用zsh+tmux,启动tmux会加载tmux.conf中的‘screen-256color’,然后再加载zshrc.conf, 所以如果要让zsh使用xterm-256color, 而tmux中使用screen-256color,应在.zshrc中设置：[[ $TMUX = "" ]] && export TERM="xterm-256color"
